@@ -19,21 +19,6 @@
     </div>
     @endif
 
-    {{-- warning --}}
-    <div class="row">
-        <div class="col-12">
-            <div class="alert alert-warning alert-dismissible text-white" role="alert">
-                <span class="text-sm">
-                    {{-- --}}
-                </span>
-                <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert"
-                    aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
     <div class="row">
         <div class="col-12">
             <div class="card my-4">

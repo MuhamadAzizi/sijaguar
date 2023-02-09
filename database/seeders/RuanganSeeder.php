@@ -16,24 +16,34 @@ class RuanganSeeder extends Seeder
     public function run()
     {
         DB::table('ruangan')->insert([
-            'no_ruangan' => [
-                'LG.001',
-                'LG.002',
-                'LG.003',
-                'LG.HDD',
-                '03.001',
-                '03.002',
-                '03.007',
+            [
+                'no_ruangan' => 'LG.001',
+                'jenis_ruangan_id' => 2,
             ],
-            'jenis_ruangan_id' => [
-                '2',
-                '2',
-                '2',
-                '3',
-                '1',
-                '1',
-                '1',
+            [
+                'no_ruangan' => 'LG.002',
+                'jenis_ruangan_id' => 2,
             ],
+            [
+                'no_ruangan' => 'LG.003',
+                'jenis_ruangan_id' => 2,
+            ],
+            [
+                'no_ruangan' => 'LG.HDD',
+                'jenis_ruangan_id' => 3,
+            ],
+            [
+                'no_ruangan' => '03.001',
+                'jenis_ruangan_id' => 1,
+            ],
+            [
+                'no_ruangan' => '03.002',
+                'jenis_ruangan_id' => 1,
+            ],
+            [
+                'no_ruangan' => '03.007',
+                'jenis_ruangan_id' => 1,
+            ]
         ]);
     }
 }

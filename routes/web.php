@@ -6,6 +6,9 @@ use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\JenisRuanganController;
 use App\Http\Controllers\RuanganController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PenggunaanController;
+use App\Http\Controllers\TahunAkademikController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +21,13 @@ use App\Http\Controllers\RuanganController;
 |
 */
 
-Route::get('/', [DashboardController::class, 'index'])->name('index');
-Route::resource('ruangan', RuanganController::class);
-Route::resource('jenis-ruangan', JenisRuanganController::class)->except(['index', 'show']);
-Route::resource('mata-kuliah', MataKuliahController::class);
-Route::resource('jadwal', JadwalController::class);
+Route::get('/', [DashboardController::class, 'index'])->name('index')->middleware('auth');
+Route::get('login', [LoginController::class, 'index'])->name('login.index');
+Route::post('login', [LoginController::class, 'login'])->name('login.login');
+Route::get('logout', [LoginController::class, 'logout'])->name('login.logout');
+Route::resource('penggunaan', PenggunaanController::class)->except(['show'])->middleware('auth');
+Route::resource('ruangan', RuanganController::class)->except(['show'])->middleware('auth');
+Route::resource('jenis-ruangan', JenisRuanganController::class)->except(['index', 'show'])->middleware('auth');
+Route::resource('mata-kuliah', MataKuliahController::class)->except(['show'])->middleware('auth');
+Route::resource('jadwal', JadwalController::class)->except(['show'])->middleware('auth');
+Route::post('tahun-akademik', [TahunAkademikController::class, 'store'])->name('tahun-akademik.store');

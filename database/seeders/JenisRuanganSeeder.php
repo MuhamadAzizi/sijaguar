@@ -16,12 +16,18 @@ class JenisRuanganSeeder extends Seeder
     public function run()
     {
         DB::table('jenis_ruangan')->insert([
-            'nama_jenis_ruangan' => [
-                'Ruang Belajar',
-                'Lab Komputer',
-                'Lab HDDS',
-                'UCC'
+            [
+                'nama_jenis_ruangan' => 'Ruang Belajar',
             ],
+            [
+                'nama_jenis_ruangan' => 'Lab Komputer',
+            ],
+            [
+                'nama_jenis_ruangan' => 'Lab HDDS',
+            ],
+            [
+                'nama_jenis_ruangan' => 'UCC',
+            ]
         ]);
     }
 }

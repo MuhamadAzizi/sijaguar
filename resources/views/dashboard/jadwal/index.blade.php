@@ -1,4 +1,8 @@
+@extends('dashboard/master')
+@section('title', $title)
+@section('content')
 <div class="container-fluid py-4">
+
     @if (session('success'))
     <div class="row">
         <div class="col-12">
@@ -15,27 +19,39 @@
     </div>
     @endif
 
-    {{-- admin --}}
+    @if (Auth::user()->level == 'Admin')
     <div class="row">
         <div class="col-12">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">Form Tambah Tahun Akademik</h6>
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="<?= base_url('jadwal/tahun-akademik/tambah/kirim') ?>" method="post">
-                        <div class="row">
+                    @if ($errors->any())
+                    <div class="alert alert-danger text-white" role="alert">
+                        <ul class="m-0">
+                            @foreach ($errors->all() as $error)
+                            <li><small>{{ $error }}</small></li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
+                    <form action="{{ route('tahun-akademik.store') }}" method="post">
+                        @csrf
+                        <div class="row align-items-end">
                             <div class="col-12 col-sm-8">
-                                <div class="input-group input-group-static my-3">
-                                    <label>Tahun Akademik</label>
+                                <div
+                                    class="input-group input-group-outline mb-3 @error('tahun_akademik') is-invalid is-filled @enderror {{ old('tahun_akademik') ? 'is-valid is-filled' : '' }}">
+                                    <label class="form-label">Tahun Akademik</label>
                                     <input type="text" class="form-control" name="tahun_akademik"
-                                        placeholder="xxxx/xxxx" required>
+                                        value="{{ old('tahun_akademik') }}">
                                 </div>
                             </div>
                             <div class="col-12 col-sm-4">
-                                <div class="input-group input-group-static my-3">
+                                <div class="input-group input-group-static mb-3">
                                     <label for="form-label" class="ms-0">Semester</label>
                                     <select class="form-control" id="form-label" name="semester">
                                         <option value="Ganjil">Ganjil</option>
@@ -54,16 +70,15 @@
             </div>
         </div>
     </div>
+    @endif
 
     <div class="row">
         <div class="col-12">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">Jadwal Perkuliahan
-                            Tahun Akademik
-                            <?= $tahun_akademik['tahun_akademik'] ?> -
-                            <?= $tahun_akademik['semester'] ?>
+                            Tahun Akademik {{ $tahun_akademik->tahun_akademik }} - {{ $tahun_akademik->semester }}
                         </h6>
                     </div>
                 </div>
@@ -73,84 +88,84 @@
                             <thead>
                                 <tr>
                                     <th
-                                        class="bg-gradient-primary text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-4">
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-4">
                                         Kode MK</th>
                                     <th
-                                        class="bg-gradient-primary text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         Nama Mata Kuliah</th>
                                     <th
-                                        class="bg-gradient-primary text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         SKS</th>
                                     <th
-                                        class="bg-gradient-primary text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         T / P</th>
                                     <th
-                                        class="bg-gradient-primary text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         Kelas</th>
                                     <th
-                                        class="bg-gradient-primary text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         Hari</th>
                                     <th
-                                        class="bg-gradient-primary text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         Waktu</th>
                                     <th
-                                        class="bg-gradient-primary text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         Ruang</th>
                                     <th
-                                        class="bg-gradient-primary text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($jadwal as $j) : ?>
+                                @foreach ($jadwal as $row)
                                 <tr>
                                     <td class="align-middle">
                                         <h6 class="mb-0 text-sm ps-3">
-                                            <?= $j['kode_mk'] ?>
+                                            {{ $row->kode_mk }}
                                         </h6>
                                     </td>
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            <?= $j['nama_mata_kuliah'] ?>
+                                            {{ $row->nama_mk }}
                                         </p>
                                     </td>
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            <?= $j['sks'] ?>
+                                            {{ $row->sks }}
                                         </p>
                                     </td>
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            <?= $j['t_p'] ?>
+                                            {{ $row->t_p }}
                                         </p>
                                     </td>
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            <?= $j['kelas'] ?>
+                                            {{ $row->kelas }}
                                         </p>
                                     </td>
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            <?= $j['hari'] ?>
+                                            {{ $row->hari }}
                                         </p>
                                     </td>
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            <?= $j['jam_mulai'] ?> -
-                                            <?= $j['jam_selesai'] ?>
+                                            {{ $row->jam_mulai }} -
+                                            {{ $row->jam_selesai }}
                                         </p>
                                     </td>
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            <?= $j['no_ruangan'] ?>
+                                            {{ $row->no_ruangan }}
                                         </p>
                                     </td>
                                     <td class="align-middle">
-                                        <?php if (session()->level == 'admin') : ?>
-                                        <a href="<?= base_url('jadwal/edit/' . $j['id']); ?>"
+                                        @if (Auth::user()->level == 'Admin')
+                                        <a href="{{ route('jadwal.edit', $row->id) }}"
                                             class="m-0 btn btn-sm bg-gradient-info">Edit</a>
-                                        <?php endif; ?>
-                                        <a href="<?= base_url('jadwal/hapus/' . $j['id']); ?>"
+                                        @endif
+                                        <a href="{{ route('jadwal.destroy', $row->id) }}"
                                             class="m-0 btn btn-sm bg-gradient-danger"
                                             onclick="return confirm('Apakah Anda yakin ingin menghapus jadwal tersebut?')">Hapus</a>
 
@@ -160,7 +175,7 @@
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-md-start justify-content-center">
-                            <a href="<?= base_url('jadwal/tambah') ?>" class="m-0 btn bg-gradient-info">
+                            <a href="{{ route('jadwal.create') }}" class="m-0 btn bg-gradient-info">
                                 Tambah Jadwal</a>
                         </div>
                     </div>
@@ -169,3 +184,4 @@
         </div>
     </div>
 </div>
+@endsection
