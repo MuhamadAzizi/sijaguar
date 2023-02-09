@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">Tambah Jadwal</h6>
                     </div>
                 </div>
@@ -74,19 +74,20 @@
                     @endif
 
                     @if (Auth::user()->level == 'User')
-                    <form action="<?= base_url('jadwal/tambah/kirim') ?>" method="post">
+                    <form action="{{ route('jadwal.store') }}" method="post">
+                        @csrf
                         <div class="input-group input-group-static mb-4">
                             <label for="form-label" class="ms-0">Jadwal</label>
                             <select class="form-control" id="form-label" name="jadwal_id">
-                                <?php foreach ($jadwal as $j) : ?>
-                                <option value="<?= $j['id'] ?>">
-                                    <?= $j['kode_mk'] ?> -
-                                    <?= $j['nama_mata_kuliah'] ?> -
-                                    <?= $j['hari'] ?>,
-                                    <?= $j['jam_mulai'] ?>-
-                                    <?= $j['jam_selesai'] ?>
+                                @foreach ($jadwal as $row)
+                                <option value="{{ $row->id }}">
+                                    {{ $row->kode_mk }} -
+                                    {{ $row->nama_mk }} -
+                                    {{ $row->hari }},
+                                    {{ $row->jam_mulai }}-
+                                    {{ $row->jam_selesai }}
                                 </option>
-                                <?php endforeach; ?>
+                                @endforeach
                             </select>
                         </div>
                         <button type="submit" class="btn bg-gradient-info">

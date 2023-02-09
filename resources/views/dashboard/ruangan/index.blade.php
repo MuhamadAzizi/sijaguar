@@ -213,7 +213,7 @@
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-md-start justify-content-center">
-                            <a href="" class="m-0 btn bg-gradient-info">
+                            <a href="{{ route('penggunaan.create') }}" class="m-0 btn bg-gradient-info">
                                 Ajukan Pengajuan Penggunaan Ruangan</a>
                         </div>
                     </div>

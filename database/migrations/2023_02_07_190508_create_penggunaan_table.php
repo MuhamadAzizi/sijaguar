@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('ruangan_id')->constrained('ruangan')->onUpdate('cascade')->onDelete('cascade');
-            $table->dateTime('waktu_masuk');
-            $table->dateTime('waktu_keluar');
+            $table->date('tanggal_penggunaan');
+            $table->time('jam_masuk');
+            $table->time('jam_keluar');
             $table->enum('status', ['Menunggu', 'Diterima', 'Ditolak', 'Selesai'])->default('Menunggu');
             $table->string('keterangan');
             $table->timestamps();

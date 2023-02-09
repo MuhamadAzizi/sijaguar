@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Jadwal;
+use App\Models\Penggunaan;
 use App\Models\VerifikasiJadwal;
 
 class VerifikasiJadwalController extends Controller
@@ -21,6 +22,7 @@ class VerifikasiJadwalController extends Controller
                 ->join('mata_kuliah', 'jadwal.mata_kuliah_id', '=', 'mata_kuliah.id')
                 ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
                 ->select('verifikasi_jadwal.*', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'mata_kuliah.kelas', 'jadwal.hari', 'jadwal.jam_mulai', 'jadwal.jam_selesai', 'ruangan.no_ruangan')
+                ->where('verifikasi_jadwal.created_at', 'like', date('Y-m-d') . '%')
                 ->get()
         ];
 
@@ -128,5 +130,25 @@ class VerifikasiJadwalController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function viewMode()
+    {
+        $data = [
+            'title' => 'Verifikasi Jadwal',
+            'verifikasi_jadwal' => VerifikasiJadwal::join('jadwal', 'verifikasi_jadwal.jadwal_id', '=', 'jadwal.id')
+                ->join('mata_kuliah', 'jadwal.mata_kuliah_id', '=', 'mata_kuliah.id')
+                ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
+                ->select('verifikasi_jadwal.*', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'mata_kuliah.kelas', 'jadwal.hari', 'jadwal.jam_mulai', 'jadwal.jam_selesai', 'ruangan.no_ruangan')
+                ->where('verifikasi_jadwal.created_at', 'like', date('Y-m-d') . '%')
+                ->get(),
+            'penggunaan' => Penggunaan::join('ruangan', 'penggunaan.ruangan_id', '=', 'ruangan.id')
+                ->join('users', 'penggunaan.user_id', '=', 'users.id')
+                ->join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
+                ->select('penggunaan.*', 'ruangan.no_ruangan', 'jenis_ruangan.nama_jenis_ruangan', 'users.username')
+                ->get(),
+        ];
+
+        return view('dashboard/verifikasi_jadwal/view', $data);
     }
 }

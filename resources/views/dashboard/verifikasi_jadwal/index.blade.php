@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-12 d-flex align-items-center justify-content-between">
                             <h6 class="mb-0">Verifikasi Jadwal</h6>
-                            <a href="" class="m-0 btn bg-gradient-info">
+                            <a href="{{ route('verifikasi-jadwal.view-mode') }}" class="m-0 btn bg-gradient-info">
                                 <i class="fas fa-eye"></i>
                                 &nbsp;View Mode
                             </a>
@@ -99,44 +99,44 @@
                                                     class="{{ ($row->status == 'Hadir') ? 'bg-success text-white' : (($row->status == 'Tidak Hadir') ? 'bg-danger text-white' : '') }}">
                                                     <td class="align-middle">
                                                         <h6 class="mb-0 text-sm ps-3">
-                                                            <?= $row['kode_mk'] ?>
+                                                            {{ $row->kode_mk }}
                                                         </h6>
                                                     </td>
                                                     <td class="align-middle">
                                                         <p class="text-xs font-weight-bold mb-0">
-                                                            <?= $row['nama_mk'] ?>
+                                                            {{ $row->nama_mk }}
                                                         </p>
                                                     </td>
                                                     <td class="align-middle">
                                                         <p class="text-xs font-weight-bold mb-0">
-                                                            <?= $row['sks'] ?>
+                                                            {{ $row->sks }}
                                                         </p>
                                                     </td>
                                                     <td class="align-middle">
                                                         <p class="text-xs font-weight-bold mb-0">
-                                                            <?= $row['t_p'] ?>
+                                                            {{ $row->t_p }}
                                                         </p>
                                                     </td>
                                                     <td class="align-middle">
                                                         <p class="text-xs font-weight-bold mb-0">
-                                                            <?= $row['kelas'] ?>
+                                                            {{ $row->kelas }}
                                                         </p>
                                                     </td>
                                                     <td class="align-middle">
                                                         <p class="text-xs font-weight-bold mb-0">
-                                                            <?= $row['hari'] ?>
+                                                            {{ $row->hari }}
                                                         </p>
                                                     </td>
                                                     <td class="align-middle">
                                                         <p class="text-xs font-weight-bold mb-0">
-                                                            <?= $row['jam_mulai'] ?>
+                                                            {{ $row->jam_mulai }}
                                                             -
-                                                            <?= $row['jam_selesai'] ?>
+                                                            {{ $row->jam_selesai }}
                                                         </p>
                                                     </td>
                                                     <td class="align-middle">
                                                         <p class="text-xs font-weight-bold mb-0">
-                                                            <?= $row['no_ruangan'] ?>
+                                                            {{ $row->no_ruangan }}
                                                         </p>
                                                     </td>
                                                     <td class="align-middle">

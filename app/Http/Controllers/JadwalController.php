@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Jadwal;
+use App\Models\JadwalUser;
 use App\Models\TahunAkademik;
 use App\Models\Ruangan;
 use App\Models\MataKuliah;
@@ -19,13 +21,27 @@ class JadwalController extends Controller
     {
         $data = [
             'title' => 'Jadwal',
-            'jadwal' => Jadwal::join('mata_kuliah', 'jadwal.mata_kuliah_id', '=', 'mata_kuliah.id')
+            'tahun_akademik' => TahunAkademik::where('status', 'Aktif')->latest()->first()
+        ];
+
+        if (Auth::user()->level == 'Admin') {
+            $data['jadwal'] = Jadwal::join('mata_kuliah', 'jadwal.mata_kuliah_id', '=', 'mata_kuliah.id')
                 ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
                 ->join('tahun_akademik', 'jadwal.tahun_akademik_id', '=', 'tahun_akademik.id')
                 ->select('jadwal.*', 'mata_kuliah.*', 'ruangan.no_ruangan', 'tahun_akademik.tahun_akademik', 'tahun_akademik.status')
-                ->get(),
-            'tahun_akademik' => TahunAkademik::where('status', 'Aktif')->latest()->first()
-        ];
+                ->where('tahun_akademik.status', 'Aktif')
+                ->get();
+        } elseif (Auth::user()->level == 'User') {
+            $data['jadwal'] = JadwalUser::join('jadwal', 'jadwal_user.jadwal_id', '=', 'jadwal.id')
+                ->join('tahun_akademik', 'jadwal.tahun_akademik_id', '=', 'tahun_akademik.id')
+                ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
+                ->join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
+                ->join('mata_kuliah', 'jadwal.mata_kuliah_id', '=', 'mata_kuliah.id')
+                ->select('jadwal.*', 'ruangan.no_ruangan', 'jenis_ruangan.nama_jenis_ruangan', 'mata_kuliah.*', 'tahun_akademik.status')
+                ->where('jadwal_user.user_id', Auth::user()->id)
+                ->where('tahun_akademik.status', 'Aktif')
+                ->get();
+        }
 
         return view('dashboard/jadwal/index', $data);
     }
@@ -43,7 +59,13 @@ class JadwalController extends Controller
             'ruangan' => Ruangan::join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
                 ->select('ruangan.*', 'jenis_ruangan.nama_jenis_ruangan')
                 ->get(),
-            'mata_kuliah' => MataKuliah::all()
+            'mata_kuliah' => MataKuliah::all(),
+            'jadwal' => Jadwal::join('mata_kuliah', 'jadwal.mata_kuliah_id', '=', 'mata_kuliah.id')
+                ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
+                ->join('tahun_akademik', 'jadwal.tahun_akademik_id', '=', 'tahun_akademik.id')
+                ->select('jadwal.*', 'mata_kuliah.*', 'ruangan.no_ruangan', 'tahun_akademik.tahun_akademik', 'tahun_akademik.status')
+                ->where('tahun_akademik.status', 'Aktif')
+                ->get()
         ];
 
         return view('dashboard/jadwal/create', $data);
@@ -57,7 +79,14 @@ class JadwalController extends Controller
      */
     public function store(Request $request)
     {
-        Jadwal::create($request->all());
+        if (Auth::user()->level == 'Admin') {
+            Jadwal::create($request->all());
+        } elseif (Auth::user()->level == 'User') {
+            JadwalUser::create([
+                'jadwal_id' => $request->jadwal_id,
+                'user_id' => Auth::user()->id
+            ]);
+        }
 
         return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil ditambahkan');
     }
@@ -116,7 +145,11 @@ class JadwalController extends Controller
      */
     public function destroy($id)
     {
-        Jadwal::destroy($id);
+        if (Auth::user()->level == 'Admin') {
+            Jadwal::destroy($id);
+        } elseif (Auth::user()->level == 'User') {
+            JadwalUser::where('id', $id)->where('user_id', Auth::user()->id)->delete();
+        }
 
         return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil dihapus');
     }

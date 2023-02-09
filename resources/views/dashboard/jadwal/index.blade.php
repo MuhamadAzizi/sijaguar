@@ -175,7 +175,7 @@
                                         </form>
                                     </td>
                                 </tr>
-                                <?php endforeach; ?>
+                                @endforeach
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-md-start justify-content-center">

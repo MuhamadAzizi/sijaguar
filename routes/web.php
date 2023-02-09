@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\JadwalUserController;
 use App\Http\Controllers\JenisRuanganController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\LoginController;
@@ -33,5 +34,7 @@ Route::resource('jenis-ruangan', JenisRuanganController::class)->except(['index'
 Route::resource('mata-kuliah', MataKuliahController::class)->except(['show'])->middleware('auth');
 Route::post('tahun-akademik', [TahunAkademikController::class, 'store'])->name('tahun-akademik.store')->middleware('auth');
 Route::resource('jadwal', JadwalController::class)->except(['show'])->middleware('auth');
+// Route::resource('jadwal-user', JadwalUserController::class)->only(['store'])
 Route::resource('verifikasi-jadwal', VerifikasiJadwalController::class)->only(['index', 'store', 'update'])->middleware('auth');
+Route::get('verifikasi-jadwal/view-mode', [VerifikasiJadwalController::class, 'viewMode'])->name('verifikasi-jadwal.view-mode')->middleware('auth');
 Route::resource('user', UserController::class)->middleware('auth');
