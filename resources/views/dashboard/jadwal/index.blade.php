@@ -165,10 +165,14 @@
                                         <a href="{{ route('jadwal.edit', $row->id) }}"
                                             class="m-0 btn btn-sm bg-gradient-info">Edit</a>
                                         @endif
-                                        <a href="{{ route('jadwal.destroy', $row->id) }}"
-                                            class="m-0 btn btn-sm bg-gradient-danger"
-                                            onclick="return confirm('Apakah Anda yakin ingin menghapus jadwal tersebut?')">Hapus</a>
 
+                                        <form action="{{ route('jadwal.destroy', $row->id) }}" method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="m-0 btn btn-sm bg-gradient-danger"
+                                                onclick="return confirm('Apakah Anda yakin ingin menghapus jadwal tersebut?')">Hapus</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>

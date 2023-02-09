@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Jadwal;
 use App\Models\TahunAkademik;
+use App\Models\Ruangan;
+use App\Models\MataKuliah;
 
 class JadwalController extends Controller
 {
@@ -37,7 +39,11 @@ class JadwalController extends Controller
     {
         $data = [
             'title' => 'Tambah Jadwal',
-            'tahun_akademik' => TahunAkademik::where('status', 'Aktif')->get(),
+            'tahun_akademik' => TahunAkademik::where('status', 'Aktif')->latest()->first(),
+            'ruangan' => Ruangan::join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
+                ->select('ruangan.*', 'jenis_ruangan.nama_jenis_ruangan')
+                ->get(),
+            'mata_kuliah' => MataKuliah::all()
         ];
 
         return view('dashboard/jadwal/create', $data);
@@ -51,7 +57,9 @@ class JadwalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Jadwal::create($request->all());
+
+        return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil ditambahkan');
     }
 
     /**
@@ -73,7 +81,17 @@ class JadwalController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = [
+            'title' => 'Edit Jadwal',
+            'jadwal' => Jadwal::find($id),
+            'tahun_akademik' => TahunAkademik::where('status', 'Aktif')->latest()->first(),
+            'ruangan' => Ruangan::join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
+                ->select('ruangan.*', 'jenis_ruangan.nama_jenis_ruangan')
+                ->get(),
+            'mata_kuliah' => MataKuliah::all()
+        ];
+
+        return view('dashboard/jadwal/edit', $data);
     }
 
     /**
@@ -85,7 +103,9 @@ class JadwalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Jadwal::find($id)->update($request->all());
+
+        return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil diubah');
     }
 
     /**
@@ -96,6 +116,8 @@ class JadwalController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Jadwal::destroy($id);
+
+        return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil dihapus');
     }
 }

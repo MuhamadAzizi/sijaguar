@@ -9,6 +9,8 @@ use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenggunaanController;
 use App\Http\Controllers\TahunAkademikController;
+use App\Http\Controllers\VerifikasiJadwalController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,5 +31,7 @@ Route::resource('penggunaan', PenggunaanController::class)->except(['show'])->mi
 Route::resource('ruangan', RuanganController::class)->except(['show'])->middleware('auth');
 Route::resource('jenis-ruangan', JenisRuanganController::class)->except(['index', 'show'])->middleware('auth');
 Route::resource('mata-kuliah', MataKuliahController::class)->except(['show'])->middleware('auth');
+Route::post('tahun-akademik', [TahunAkademikController::class, 'store'])->name('tahun-akademik.store')->middleware('auth');
 Route::resource('jadwal', JadwalController::class)->except(['show'])->middleware('auth');
-Route::post('tahun-akademik', [TahunAkademikController::class, 'store'])->name('tahun-akademik.store');
+Route::resource('verifikasi-jadwal', VerifikasiJadwalController::class)->only(['index', 'store', 'update'])->middleware('auth');
+Route::resource('user', UserController::class)->middleware('auth');

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('verifikasi_jadwal', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('jadwal_user_id')->constrained('jadwal_user')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('jadwal_id')->constrained('jadwal')->onUpdate('cascade')->onDelete('cascade');
             $table->enum('status', ['Hadir', 'Tidak Hadir', 'Menunggu'])->default('Menunggu');
             $table->timestamps();
         });
@@ -29,7 +29,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('verifikasi_jadwal', function (Blueprint $table) {
-            $table->dropForeign(['jadwal_user_id']);
+            $table->dropForeign(['jadwal_id']);
         });
         Schema::dropIfExists('verifikasi_jadwal');
     }

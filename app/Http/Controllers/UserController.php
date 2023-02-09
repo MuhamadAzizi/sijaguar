@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -14,7 +15,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $data = [
+            'title' => 'User',
+            'user' => User::where('level', 'User')->get()
+        ];
+
+        return view('dashboard/user/index', $data);
     }
 
     /**

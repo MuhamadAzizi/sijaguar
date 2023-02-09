@@ -6,15 +6,16 @@
         <div class="col-12">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3">Tambah Jadwal</h6>
+                    <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
+                        <h6 class="text-white text-capitalize ps-3">Edit Jadwal</h6>
                     </div>
                 </div>
                 <div class="card-body pb-2">
 
                     @if (Auth::user()->level == 'Admin')
-                    <form action="{{ route('jadwal.store') }}" method="post">
+                    <form action="{{ route('jadwal.update', $jadwal->id) }}" method="post">
                         @csrf
+                        @method('PUT')
 
                         <!-- Tahun akademik -->
                         <input type="text" class="form-control" name="tahun_akademik_id"
@@ -23,7 +24,8 @@
                             <label for="form-label" class="ms-0">Ruangan</label>
                             <select class="form-control" id="form-label" name="ruangan_id">
                                 @foreach ($ruangan as $row)
-                                <option value="{{ $row->id }}">
+                                <option value="{{ $row->id }}" {{ ($row->id == $jadwal->ruangan_id) ? 'selected' : ''
+                                    }}>
                                     {{ $row->no_ruangan }} -
                                     {{ $row->nama_jenis_ruangan }}
                                 </option>
@@ -34,7 +36,8 @@
                             <label for="form-label" class="ms-0">Mata Kuliah</label>
                             <select class="form-control" id="form-label" name="mata_kuliah_id">
                                 @foreach ($mata_kuliah as $row)
-                                <option value="{{ $row->id }}">
+                                <option value="{{ $row->id }}" {{ ($row->id == $jadwal->mata_kuliah_id) ? 'selected' :
+                                    '' }}>
                                     {{ $row->kode_mk }} -
                                     {{ $row->nama_mk }}
                                 </option>
@@ -47,7 +50,7 @@
                                     <label for="form-label" class="ms-0">Hari</label>
                                     <select class="form-control" id="form-label" name="hari">
                                         @foreach (['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'] as $hari)
-                                        <option value="{{ $hari }}">
+                                        <option value="{{ $hari }}" {{ ($hari==$jadwal->hari) ? 'selected' : '' }}>
                                             {{ $hari }}
                                         </option>
                                         @endforeach
@@ -57,13 +60,15 @@
                             <div class="col-md-4 col-6">
                                 <div class="input-group input-group-static my-3">
                                     <label>Jam Mulai</label>
-                                    <input type="time" class="form-control" name="jam_mulai" required>
+                                    <input type="time" class="form-control" name="jam_mulai"
+                                        value="{{ $jadwal->jam_mulai }}" required>
                                 </div>
                             </div>
                             <div class="col-md-4 col-6">
                                 <div class="input-group input-group-static my-3">
                                     <label>Jam Selesai</label>
-                                    <input type="time" class="form-control" name="jam_selesai" required>
+                                    <input type="time" class="form-control" name="jam_selesai"
+                                        value="{{ $jadwal->jam_selesai }}" required>
                                 </div>
                             </div>
                         </div>

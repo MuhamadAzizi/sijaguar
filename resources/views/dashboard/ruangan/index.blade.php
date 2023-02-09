@@ -23,7 +23,7 @@
         <div class="col-12">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">Cek Status Ruangan</h6>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
         <div class="col-12 col-lg-7">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">Tabel Ruangan</h6>
                     </div>
                 </div>
@@ -73,13 +73,13 @@
                             <thead>
                                 <tr>
                                     <th
-                                        class="bg-gradient-primary text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-4">
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-4">
                                         No Ruangan</th>
                                     <th
-                                        class="bg-gradient-primary text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         Jenis Ruangan</th>
                                     <th
-                                        class="bg-gradient-primary text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         Aksi</th>
                                 </tr>
                             </thead>
@@ -122,7 +122,7 @@
         <div class="col-12 col-lg-5">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">Tabel Jenis Ruangan</h6>
                     </div>
                 </div>
@@ -132,10 +132,10 @@
                             <thead>
                                 <tr>
                                     <th
-                                        class="bg-gradient-primary text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-4">
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-4">
                                         Jenis Ruangan</th>
                                     <th
-                                        class="bg-gradient-primary text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         Aksi</th>
                                 </tr>
                             </thead>
@@ -178,7 +178,7 @@
         <div class="col-12 col-lg-8">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">Daftar Ruangan</h6>
                     </div>
                 </div>
@@ -188,10 +188,10 @@
                             <thead>
                                 <tr>
                                     <th
-                                        class="bg-gradient-primary text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-4">
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-4">
                                         No Ruangan</th>
                                     <th
-                                        class="bg-gradient-primary text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         Jenis Ruangan</th>
                                 </tr>
                             </thead>
@@ -223,7 +223,7 @@
         <div class="col-12 col-lg-4">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">Cek Status Ruangan</h6>
                     </div>
                 </div>

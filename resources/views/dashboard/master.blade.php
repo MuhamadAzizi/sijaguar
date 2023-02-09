@@ -114,6 +114,44 @@
                         <span class="nav-link-text ms-1">Jadwal</span>
                     </a>
                 </li>
+
+                @if (Auth::user()->level == 'Admin')
+                <li class="nav-item">
+                    <a class="nav-link text-white {{ Request::is('verifikasi-jadwal*') ? 'active bg-gradient-info' : '' }}"
+                        href="{{ route('verifikasi-jadwal.index') }}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">check</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Verifikasi Jadwal</span>
+                    </a>
+                </li>
+                @endif
+
+                <li class="nav-item mt-3">
+                    <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">User
+                    </h6>
+                </li>
+
+                @if (Auth::user()->level == 'Admin')
+                <li class="nav-item">
+                    <a class="nav-link text-white {{ Request::is('user*') ? 'active bg-gradient-info' : '' }}"
+                        href="{{ route('user.index') }}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">person</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Daftar User</span>
+                    </a>
+                </li>
+                @endif
+
+                <li class="nav-item">
+                    <a class="nav-link text-white {{ Request::is('user*') ? 'active bg-gradient-info' : '' }}" href="">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">person</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Profil</span>
+                    </a>
+                </li>
             </ul>
         </div>
 
