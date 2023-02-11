@@ -9,6 +9,7 @@ use App\Http\Controllers\JenisRuanganController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenggunaanController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\TahunAkademikController;
 use App\Http\Controllers\VerifikasiJadwalController;
 use App\Http\Controllers\UserController;
@@ -38,3 +39,4 @@ Route::resource('jadwal', JadwalController::class)->except(['show'])->middleware
 Route::resource('verifikasi-jadwal', VerifikasiJadwalController::class)->only(['index', 'store', 'update'])->middleware('auth');
 Route::get('verifikasi-jadwal/view-mode', [VerifikasiJadwalController::class, 'viewMode'])->name('verifikasi-jadwal.view-mode')->middleware('auth');
 Route::resource('user', UserController::class)->middleware('auth');
+Route::resource('profil', ProfilController::class)->only(['index', 'edit', 'update'])->middleware('auth');

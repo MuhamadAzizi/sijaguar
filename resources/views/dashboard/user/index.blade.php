@@ -47,7 +47,7 @@
                                 @foreach ($user as $row)
                                 <tr>
                                     <td class="align-middle d-flex align-items-center">
-                                        <img src="/assets/img/users/{{ $row->foto }}" class="avatar avatar-sm me-3">
+                                        <img src="{{ asset('img/user/' . $row->foto) }}" class="avatar avatar-sm me-3">
                                         <h6 class="mb-0 text-sm">
                                             {{ $row->nama }}
                                         </h6>
@@ -58,9 +58,15 @@
                                         </span>
                                     </td>
                                     <td class="align-middle">
-                                        <a href="" class="m-0 btn btn-sm bg-gradient-dark">Lihat</a>
-                                        <a href="" class="m-0 btn btn-sm bg-gradient-danger"
-                                            onclick="return confirm('Apakah kamu yakin ingin menghapus user ini?')">Hapus</a>
+                                        <a href="{{ route('user.show', $row->id) }}"
+                                            class="m-0 btn btn-sm bg-gradient-dark">Lihat</a>
+                                        <form action="{{ route('user.destroy', $row->id) }}" method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="m-0 btn btn-sm bg-gradient-danger"
+                                                onclick="return confirm('Apakah kamu yakin ingin menghapus user ini?')">Hapus</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach
