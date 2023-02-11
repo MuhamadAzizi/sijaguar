@@ -310,14 +310,13 @@
                                         </td>
                                     </tr>
                                     @empty
-                                    <div class="row">
-                                        <div class="col-md-12 mb-md-0 mb-4">
-                                            <div
-                                                class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row">
-                                                <span>Tidak ada jadwal hari ini</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <tr>
+                                        <td class="align-middle" colspan="8">
+                                            <p class="text-xs font-weight-bold text-center mb-0">
+                                                Tidak ada pengajuan penggunaan ruangan
+                                            </p>
+                                        </td>
+                                    </tr>
                                     @endforelse
                                 </tbody>
                             </table>

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->char('kode_mk', 8);
             $table->string('nama_mk');
+            $table->string('dosen')->nullable();
             $table->integer('sks');
             $table->enum('t_p', ['T', 'P']);
             $table->char('kelas', 2);

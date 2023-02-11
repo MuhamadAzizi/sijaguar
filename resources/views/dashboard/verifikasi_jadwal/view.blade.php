@@ -101,6 +101,8 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                             Nama Mata Kuliah</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                            Dosen</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                             Kelas</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                             Waktu</th>
@@ -117,6 +119,11 @@
                                         <td class="align-middle">
                                             <p class="text-xs font-weight-bold mb-0">
                                                 {{ $row->nama_mk }}
+                                            </p>
+                                        </td>
+                                        <td class="align-middle">
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ $row->dosen }}
                                             </p>
                                         </td>
                                         <td class="align-middle">

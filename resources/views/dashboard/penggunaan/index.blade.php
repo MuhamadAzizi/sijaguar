@@ -126,8 +126,23 @@
 
                                         @if (Auth::user()->level == 'Admin')
                                         @if ($row->status == 'Menunggu')
-                                        <a href="" class="m-0 btn btn-sm bg-gradient-info">Acc</a>
-                                        <a href="" class="m-0 btn btn-sm bg-gradient-danger">Tolak</a>
+                                        <form action="{{ route('penggunaan.update', $row->id) }}" method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="status" value="Diterima">
+                                            <button type="submit" class="m-0 btn btn-sm bg-gradient-info"
+                                                onclick="return confirm('Apakah Anda yakin ingin menerima pengajuan ini?')">Acc</button>
+                                        </form>
+
+                                        <form action="{{ route('penggunaan.update', $row->id) }}" method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="status" value="Ditolak">
+                                            <button type="submit" class="m-0 btn btn-sm bg-gradient-danger"
+                                                onclick="return confirm('Apakah Anda yakin ingin menolak pengajuan ini?')">Tolak</button>
+                                        </form>
                                         @else
                                         -
                                         @endif

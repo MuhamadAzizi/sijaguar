@@ -132,31 +132,41 @@ class PenggunaanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $messages = [
-            'ruangan_id.required' => 'Ruangan harus diisi',
-            'tanggal_penggunaan.required' => 'Tanggal Penggunaan harus diisi',
-            'jam_masuk.required' => 'Jam Mulai harus diisi',
-            'jam_keluar.required' => 'Jam Selesai harus diisi',
-            'keterangan.required' => 'Keterangan harus diisi'
-        ];
+        if ($request->status) {
+            Penggunaan::find($id)->update([
+                'status' => $request->status
+            ]);
 
-        $request->validate([
-            'ruangan_id' => 'required',
-            'tanggal_penggunaan' => 'required',
-            'jam_masuk' => 'required',
-            'jam_keluar' => 'required',
-            'keterangan' => 'required'
-        ], $messages);
+            $msg = 'Berhasil ' . $request->status . ' penggunaan ruangan';
+        } else {
+            $messages = [
+                'ruangan_id.required' => 'Ruangan harus diisi',
+                'tanggal_penggunaan.required' => 'Tanggal Penggunaan harus diisi',
+                'jam_masuk.required' => 'Jam Mulai harus diisi',
+                'jam_keluar.required' => 'Jam Selesai harus diisi',
+                'keterangan.required' => 'Keterangan harus diisi'
+            ];
 
-        Penggunaan::find($id)->update([
-            'ruangan_id' => $request->ruangan_id,
-            'tanggal_penggunaan' => $request->tanggal_penggunaan,
-            'jam_masuk' => $request->jam_masuk,
-            'jam_keluar' => $request->jam_keluar,
-            'keterangan' => $request->keterangan
-        ]);
+            $request->validate([
+                'ruangan_id' => 'required',
+                'tanggal_penggunaan' => 'required',
+                'jam_masuk' => 'required',
+                'jam_keluar' => 'required',
+                'keterangan' => 'required'
+            ], $messages);
 
-        return redirect()->route('penggunaan.index')->with('success', 'Berhasil mengubah pengajuan penggunaan ruangan');
+            Penggunaan::find($id)->update([
+                'ruangan_id' => $request->ruangan_id,
+                'tanggal_penggunaan' => $request->tanggal_penggunaan,
+                'jam_masuk' => $request->jam_masuk,
+                'jam_keluar' => $request->jam_keluar,
+                'keterangan' => $request->keterangan
+            ]);
+
+            $msg = 'Berhasil mengubah pengajuan penggunaan ruangan';
+        }
+
+        return redirect()->route('penggunaan.index')->with('success', $msg);
     }
 
     /**

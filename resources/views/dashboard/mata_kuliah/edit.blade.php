@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">Edit Mata Kuliah</h6>
                     </div>
                 </div>
@@ -33,6 +33,11 @@
                             class="input-group input-group-outline my-3 @error('nama_mk') is-invalid @enderror is-filled">
                             <label class="form-label">Mata Kuliah</label>
                             <input type="text" class="form-control" name="nama_mk" value="{{ $mata_kuliah->nama_mk }}">
+                        </div>
+                        <div
+                            class="input-group input-group-outline my-3 @error('dosen') is-invalid @enderror is-filled">
+                            <label class="form-label">Dosen</label>
+                            <input type="text" class="form-control" name="dosen" value="{{ $mata_kuliah->dosen }}">
                         </div>
                         <div class="input-group input-group-outline my-3 @error('sks') is-invalid @enderror is-filled">
                             <label class="form-label">SKS</label>

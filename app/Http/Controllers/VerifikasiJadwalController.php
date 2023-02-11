@@ -21,7 +21,7 @@ class VerifikasiJadwalController extends Controller
             'verifikasi_jadwal' => VerifikasiJadwal::join('jadwal', 'verifikasi_jadwal.jadwal_id', '=', 'jadwal.id')
                 ->join('mata_kuliah', 'jadwal.mata_kuliah_id', '=', 'mata_kuliah.id')
                 ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
-                ->select('verifikasi_jadwal.*', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'mata_kuliah.kelas', 'jadwal.hari', 'jadwal.jam_mulai', 'jadwal.jam_selesai', 'ruangan.no_ruangan')
+                ->select('verifikasi_jadwal.*', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'mata_kuliah.dosen', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'mata_kuliah.kelas', 'jadwal.hari', 'jadwal.jam_mulai', 'jadwal.jam_selesai', 'ruangan.no_ruangan')
                 ->where('verifikasi_jadwal.created_at', 'like', date('Y-m-d') . '%')
                 ->get()
         ];
@@ -139,7 +139,7 @@ class VerifikasiJadwalController extends Controller
             'verifikasi_jadwal' => VerifikasiJadwal::join('jadwal', 'verifikasi_jadwal.jadwal_id', '=', 'jadwal.id')
                 ->join('mata_kuliah', 'jadwal.mata_kuliah_id', '=', 'mata_kuliah.id')
                 ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
-                ->select('verifikasi_jadwal.*', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'mata_kuliah.kelas', 'jadwal.hari', 'jadwal.jam_mulai', 'jadwal.jam_selesai', 'ruangan.no_ruangan')
+                ->select('verifikasi_jadwal.*', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'mata_kuliah.dosen', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'mata_kuliah.kelas', 'jadwal.hari', 'jadwal.jam_mulai', 'jadwal.jam_selesai', 'ruangan.no_ruangan')
                 ->where('verifikasi_jadwal.created_at', 'like', date('Y-m-d') . '%')
                 ->get(),
             'penggunaan' => Penggunaan::join('ruangan', 'penggunaan.ruangan_id', '=', 'ruangan.id')

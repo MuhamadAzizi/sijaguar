@@ -95,6 +95,9 @@
                                         Nama Mata Kuliah</th>
                                     <th
                                         class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        Dosen</th>
+                                    <th
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         SKS</th>
                                     <th
                                         class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
@@ -127,6 +130,11 @@
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
                                             {{ $row->nama_mk }}
+                                        </p>
+                                    </td>
+                                    <td class="align-middle">
+                                        <p class="text-xs font-weight-bold mb-0">
+                                            {{ $row->dosen }}
                                         </p>
                                     </td>
                                     <td class="align-middle">

@@ -34,6 +34,11 @@
                             <input type="text" class="form-control" name="nama_mk" value="{{ old('nama_mk') }}">
                         </div>
                         <div
+                            class="input-group input-group-outline mb-3 @error('dosen') is-invalid is-filled @enderror {{ old('dosen') ? 'is-valid is-filled' : '' }}">
+                            <label class="form-label">Dosen</label>
+                            <input type="text" class="form-control" name="dosen" value="{{ old('dosen') }}">
+                        </div>
+                        <div
                             class="input-group input-group-outline mb-3 @error('sks') is-invalid is-filled @enderror {{ old('sks') ? 'is-valid is-filled' : '' }}">
                             <label class="form-label">SKS</label>
                             <input type="number" class="form-control" name="sks" value="{{ old('sks') }}">
