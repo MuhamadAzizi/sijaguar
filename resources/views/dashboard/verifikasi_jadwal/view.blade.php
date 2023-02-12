@@ -86,7 +86,7 @@
                         <div class="card-header pb-0 p-3">
                             <div class="row">
                                 <div class="col-12 d-flex align-items-center justify-content-between">
-                                    <h6 class="mb-0">Verifikasi Jadwal</h6>
+                                    <h6 class="mb-0">Perkuliahan Hari Ini</h6>
                                     <a href="" class="m-0 btn bg-gradient-info">
                                         <i class="fa fa-refresh"></i>
                                         &nbsp;Refresh
