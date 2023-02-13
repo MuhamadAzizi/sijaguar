@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ruangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Penggunaan;
 
 class LoginController extends Controller
 {
@@ -29,6 +31,12 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            // Update penggunaan ruangan (naive approach)
+            Penggunaan::where('tanggal_penggunaan', date('Y-m-d'))
+                ->where('jam_keluar', '<', date('H:i:s'))
+                ->where('status', 'Diterima')
+                ->update(['status' => 'Selesai']);
 
             return redirect()->route('index');
         }

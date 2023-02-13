@@ -50,7 +50,13 @@
             <div class="container-fluid py-1 px-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                        {{-- breadcrumb --}}
+                        @foreach (Breadcrumbs::generate(Request::route()->getName()) as $breadcrumb)
+                        @if (!is_null($breadcrumb->url) && !$loop->last)
+                        <li class="breadcrumb-item"><a href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a></li>
+                        @else
+                        <li class="breadcrumb-item active">{{ $breadcrumb->title }}</li>
+                        @endif
+                        @endforeach
                     </ol>
                     <h6 class="font-weight-bolder mb-0">
                         {{ $title }}
@@ -81,16 +87,19 @@
 
         <div class="container-fluid py-4">
             <div class="row">
-                <div class="col-lg-7 mb-3">
+                <div class="col-12 mb-3 d-flex justify-content-end">
+                    <a href="" class="m-0 btn bg-gradient-secondary shadow-secondary">
+                        <i class="fa fa-refresh"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mb-3">
                     <div class="card">
                         <div class="card-header pb-0 p-3">
                             <div class="row">
                                 <div class="col-12 d-flex align-items-center justify-content-between">
                                     <h6 class="mb-0">Perkuliahan Hari Ini</h6>
-                                    <a href="" class="m-0 btn bg-gradient-info">
-                                        <i class="fa fa-refresh"></i>
-                                        &nbsp;Refresh
-                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -156,16 +165,12 @@
                     </div>
                 </div>
 
-                <div class="col-lg-5 mb-3">
+                <div class="col-lg-4 mb-3">
                     <div class="card">
                         <div class="card-header pb-0 p-3">
                             <div class="row">
                                 <div class="col-12 d-flex align-items-center justify-content-between">
                                     <h6 class="mb-0">Jadwal Penggunaan Ruangan Hari Ini</h6>
-                                    <a href="" class="m-0 btn bg-gradient-info">
-                                        <i class="fa fa-refresh"></i>
-                                        &nbsp;Refresh
-                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -178,13 +183,7 @@
                                             Ruangan</th>
                                         <th
                                             class="text-secondary text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
-                                            Jam Masuk</th>
-                                        <th
-                                            class="text-secondary text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
-                                            Jam Keluar</th>
-                                        <th
-                                            class="text-secondary text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
-                                            Keterangan</th>
+                                            Waktu</th>
                                         <th
                                             class="text-secondary text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                             Status</th>
@@ -200,17 +199,7 @@
                                         </td>
                                         <td class="align-middle">
                                             <p class="text-xs font-weight-bold mb-0">
-                                                {{ $row->jam_masuk }}
-                                            </p>
-                                        </td>
-                                        <td class="align-middle">
-                                            <p class="text-xs font-weight-bold mb-0">
-                                                {{ $row->jam_keluar }}
-                                            </p>
-                                        </td>
-                                        <td class="align-middle">
-                                            <p class="text-xs font-weight-bold mb-0">
-                                                {{ $row->keterangan }}
+                                                {{ $row->jam_masuk }} - {{ $row->jam_keluar }}
                                             </p>
                                         </td>
                                         <td class="align-middle">
@@ -246,7 +235,7 @@
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-12 mb-lg-0 mb-4">
-                        <div class="copyright text-center text-sm text-muted text-lg-start">
+                        <div class="copyright text-center text-sm text-muted text-lg-start w-100">
                             © Sistem Informasi Jadwal Penggunaan Ruangan 2022
                         </div>
                     </div>
@@ -274,7 +263,8 @@
 
         $(document).ready(function() {
             $('.datatable').DataTable({
-                responsive: true
+                responsive: true,
+                order: [],
             });
         });
     </script>

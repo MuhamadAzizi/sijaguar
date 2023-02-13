@@ -112,10 +112,10 @@ class VerifikasiJadwalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
         $verfifikasi_jadwal = VerifikasiJadwal::find($id);
-        $verfifikasi_jadwal->status = 'Hadir';
+        $verfifikasi_jadwal->status = $request->status;
         $verfifikasi_jadwal->save();
 
         return redirect()->route('verifikasi-jadwal.index')->with('success', 'Berhasil memverifikasi jadwal');
@@ -141,13 +141,24 @@ class VerifikasiJadwalController extends Controller
                 ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
                 ->select('verifikasi_jadwal.*', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'mata_kuliah.dosen', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'mata_kuliah.kelas', 'jadwal.hari', 'jadwal.jam_mulai', 'jadwal.jam_selesai', 'ruangan.no_ruangan')
                 ->where('verifikasi_jadwal.created_at', 'like', date('Y-m-d') . '%')
+                ->where('verifikasi_jadwal.status', '!=', 'Menunggu')
+                ->orderBy('jadwal.jam_mulai', 'asc')
                 ->get(),
             'penggunaan' => Penggunaan::join('ruangan', 'penggunaan.ruangan_id', '=', 'ruangan.id')
                 ->join('users', 'penggunaan.user_id', '=', 'users.id')
                 ->join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
                 ->select('penggunaan.*', 'ruangan.no_ruangan', 'jenis_ruangan.nama_jenis_ruangan', 'users.username')
+                ->where('penggunaan.status', 'Diterima')
+                ->where('tanggal_penggunaan', date('Y-m-d'))
+                ->orderBy('penggunaan.jam_masuk', 'asc')
                 ->get(),
         ];
+
+        // Update penggunaan ruangan (naive approach)
+        Penggunaan::where('tanggal_penggunaan', date('Y-m-d'))
+            ->where('jam_keluar', '<', date('H:i:s'))
+            ->where('status', 'Diterima')
+            ->update(['status' => 'Selesai']);
 
         return view('dashboard/verifikasi_jadwal/view', $data);
     }

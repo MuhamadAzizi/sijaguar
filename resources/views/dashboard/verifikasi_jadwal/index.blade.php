@@ -89,82 +89,91 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($verifikasi_jadwal as $row)
-                                            @if ($row->status == 'Menunggu')
-                                            <form method="post"
-                                                action="{{ route('verifikasi-jadwal.update', $row->id) }}">
-                                                @csrf
-                                                @method('PUT')
-                                                <input type="hidden" name="id" value="{{ $row->id }}">
-                                                <input type="hidden" name="status" value="Hadir">
-                                                @endif
-
-                                                <tr
-                                                    class="{{ ($row->status == 'Hadir') ? 'bg-success text-white' : (($row->status == 'Tidak Hadir') ? 'bg-danger text-white' : '') }}">
-                                                    <td class="align-middle">
-                                                        <h6 class="mb-0 text-sm ps-3">
-                                                            {{ $row->kode_mk }}
-                                                        </h6>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $row->nama_mk }}
-                                                        </p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $row->dosen }}
-                                                        </p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $row->sks }}
-                                                        </p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $row->t_p }}
-                                                        </p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $row->kelas }}
-                                                        </p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $row->hari }}
-                                                        </p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $row->jam_mulai }}
-                                                            -
-                                                            {{ $row->jam_selesai }}
-                                                        </p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $row->no_ruangan }}
-                                                        </p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $row->status }}
-                                                        </p>
-                                                    </td>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        @if ($row->status == 'Menunggu')
+                                            <tr
+                                                class="{{ ($row->status == 'Hadir') ? 'bg-success text-white' : (($row->status == 'Tidak Hadir') ? 'bg-danger text-white' : '') }}">
+                                                <td class="align-middle">
+                                                    <h6 class="mb-0 text-sm ps-3">
+                                                        {{ $row->kode_mk }}
+                                                    </h6>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $row->nama_mk }}
+                                                    </p>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $row->dosen }}
+                                                    </p>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $row->sks }}
+                                                    </p>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $row->t_p }}
+                                                    </p>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $row->kelas }}
+                                                    </p>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $row->hari }}
+                                                    </p>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $row->jam_mulai }}
+                                                        -
+                                                        {{ $row->jam_selesai }}
+                                                    </p>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $row->no_ruangan }}
+                                                    </p>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $row->status }}
+                                                    </p>
+                                                </td>
+                                                </td>
+                                                <td class="align-middle">
+                                                    @if ($row->status == 'Menunggu')
+                                                    <form method="post"
+                                                        action="{{ route('verifikasi-jadwal.update', $row->id) }}"
+                                                        class="d-inline">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="hidden" name="id" value="{{ $row->id }}">
+                                                        <input type="hidden" name="status" value="Hadir">
                                                         <button class="m-0 btn btn-sm btn-success"
                                                             type="submit">Verifikasi</a>
-                                                            @else
-                                                            -
-                                                            @endif
-                                                    </td>
-                                                </tr>
-                                                @if ($row->status == 'Hadir')
-                                            </form>
-                                            @endif
+                                                        </button>
+                                                    </form>
+
+                                                    <form method="post"
+                                                        action="{{ route('verifikasi-jadwal.update', $row->id) }}"
+                                                        class="d-inline">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="hidden" name="id" value="{{ $row->id }}">
+                                                        <input type="hidden" name="status" value="Tidak Hadir">
+                                                        <button class="m-0 btn btn-sm btn-danger" type="submit">Tidak
+                                                            Hadir</a>
+                                                        </button>
+                                                    </form>
+                                                    @else
+                                                    -
+                                                    @endif
+                                                </td>
+                                            </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
