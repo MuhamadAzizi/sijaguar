@@ -69,7 +69,7 @@
                         <div class="card z-index-0 fadeIn3 fadeInBottom">
                             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                                 <div class="bg-gradient-info shadow-info border-radius-lg py-3 pe-1">
-                                    <h4 class="text-white font-weight-bolder text-center mt-2 mb-0 pb-3">Login</h4>
+                                    <h4 class="text-white font-weight-bolder text-center mt-2 mb-0 pb-3">Sign Up</h4>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -83,20 +83,20 @@
                                 </div>
                                 @endif
 
-                                @if (session('success'))
-                                <div class="alert alert-success text-white" role="alert">
-                                    <small>{{ session('success') }}</small>
-                                </div>
-                                @endif
-
                                 @if (session('error'))
                                 <div class="alert alert-danger text-white" role="alert">
                                     <small>{{ session('error') }}</small>
                                 </div>
                                 @endif
 
-                                <form role="form" class="text-start" action="{{ route('login.login') }}" method="post">
+                                <form role="form" class="text-start" action="{{ route('register.store') }}"
+                                    method="post">
                                     @csrf
+                                    <div
+                                        class="input-group input-group-outline my-3 @error('nama') is-invalid is-filled @enderror {{ old('nama') ? 'is-valid is-filled' : '' }}">
+                                        <label class="form-label">Nama</label>
+                                        <input type="text" class="form-control" name="nama" value="{{ old('nama') }}">
+                                    </div>
                                     <div
                                         class="input-group input-group-outline my-3 @error('username') is-invalid is-filled @enderror {{ old('username') ? 'is-valid is-filled' : '' }}">
                                         <label class="form-label">Username</label>
@@ -108,14 +108,19 @@
                                         <label class="form-label">Password</label>
                                         <input type="password" class="form-control" name="password">
                                     </div>
+                                    <div
+                                        class="input-group input-group-outline mb-3 @error('password') is-invalid is-filled @enderror">
+                                        <label class="form-label">Konfirmasi Password</label>
+                                        <input type="password" class="form-control" name="password_confirmation">
+                                    </div>
                                     <div class="text-center">
-                                        <button type="submit"
-                                            class="btn bg-gradient-info w-100 my-4 mb-2">Login</button>
+                                        <button type="submit" class="btn bg-gradient-info w-100 my-4 mb-2">Sign
+                                            Up</button>
                                     </div>
                                     <p class="mt-4 text-sm text-center">
-                                        Belum mempunyai akun?
-                                        <a href="{{ route('register.index') }}"
-                                            class="text-info text-gradient font-weight-bold">Daftar</a>
+                                        Sudah mempunyai akun?
+                                        <a href="{{ route('login.index') }}"
+                                            class="text-info text-gradient font-weight-bold">Login</a>
                                     </p>
                                 </form>
                             </div>

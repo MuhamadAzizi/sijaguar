@@ -10,6 +10,7 @@ use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenggunaanController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TahunAkademikController;
 use App\Http\Controllers\VerifikasiJadwalController;
 use App\Http\Controllers\UserController;
@@ -35,8 +36,9 @@ Route::resource('jenis-ruangan', JenisRuanganController::class)->except(['index'
 Route::resource('mata-kuliah', MataKuliahController::class)->except(['show'])->middleware('auth');
 Route::post('tahun-akademik', [TahunAkademikController::class, 'store'])->name('tahun-akademik.store')->middleware('auth');
 Route::resource('jadwal', JadwalController::class)->except(['show'])->middleware('auth');
-// Route::resource('jadwal-user', JadwalUserController::class)->only(['store'])
 Route::resource('verifikasi-jadwal', VerifikasiJadwalController::class)->only(['index', 'store', 'update'])->middleware('auth');
 Route::get('verifikasi-jadwal/view-mode', [VerifikasiJadwalController::class, 'viewMode'])->name('verifikasi-jadwal.view-mode')->middleware('auth');
 Route::resource('user', UserController::class)->middleware('auth');
 Route::resource('profil', ProfilController::class)->only(['index', 'edit', 'update'])->middleware('auth');
+Route::get('register', [RegisterController::class, 'index'])->name('register.index');
+Route::post('register', [RegisterController::class, 'store'])->name('register.store');

@@ -21,6 +21,12 @@ class PenggunaanController extends Controller
             'ruangan' => Ruangan::all()
         ];
 
+        // Update penggunaan ruangan (naive approach)
+        Penggunaan::where('tanggal_penggunaan', date('Y-m-d'))
+            ->where('jam_keluar', '<', date('H:i:s'))
+            ->where('status', 'Diterima')
+            ->update(['status' => 'Selesai']);
+
         // Pengaturan kondisi level untuk menampilkan data penggunaan
         if (Auth::user()->level == 'Admin') {
             $data['penggunaan'] = Penggunaan::join('ruangan', 'penggunaan.ruangan_id', '=', 'ruangan.id')
