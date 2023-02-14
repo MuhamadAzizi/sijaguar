@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dosen;
 use App\Models\MataKuliah;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,12 @@ class MataKuliahController extends Controller
     {
         $data = [
             'title' => 'Mata Kuliah',
-            'mata_kuliah' => MataKuliah::all()
+            'mata_kuliah' => MataKuliah::select('mata_kuliah.*', 'dosen.nama_dosen')
+                ->leftJoin('dosen', function ($join) {
+                    $join->on('mata_kuliah.dosen_id', 'dosen.id')
+                        ->whereNotNull('mata_kuliah.dosen_id');
+                })
+                ->get()
         ];
 
         return view('dashboard/mata_kuliah/index', $data);
@@ -30,7 +36,8 @@ class MataKuliahController extends Controller
     public function create()
     {
         $data = [
-            'title' => 'Tambah Mata Kuliah'
+            'title' => 'Tambah Mata Kuliah',
+            'dosen' => Dosen::all()
         ];
 
         return view('dashboard/mata_kuliah/create', $data);
@@ -51,8 +58,6 @@ class MataKuliahController extends Controller
             'sks.required' => 'SKS harus diisi',
             'sks.min_digits' => 'SKS minimal 1 sks',
             't_p.required' => 'Teori / Praktek harus diisi',
-            'kelas.required' => 'Kelas harus diisi',
-            'kelas.size' => 'Kelas harus 2 karakter',
             'semester.required' => 'Semester harus diisi',
             'semester.min_digits' => 'Semester minimal 1 semester'
         ];
@@ -62,7 +67,6 @@ class MataKuliahController extends Controller
             'nama_mk' => 'required',
             'sks' => 'required|min_digits:1',
             't_p' => 'required',
-            'kelas' => 'required|min:2|max:2',
             'semester' => 'required|min_digits:1'
         ], $messages);
 
@@ -93,7 +97,8 @@ class MataKuliahController extends Controller
     {
         $data = [
             'title' => 'Edit Mata Kuliah',
-            'mata_kuliah' => MataKuliah::find($id)
+            'mata_kuliah' => MataKuliah::find($id),
+            'dosen' => Dosen::all(),
         ];
 
         return view('dashboard/mata_kuliah/edit', $data);
@@ -115,8 +120,6 @@ class MataKuliahController extends Controller
             'sks.required' => 'SKS harus diisi',
             'sks.min_digits' => 'SKS minimal 1 sks',
             't_p.required' => 'Teori / Praktek harus diisi',
-            'kelas.required' => 'Kelas harus diisi',
-            'kelas.size' => 'Kelas harus 2 karakter',
             'semester.required' => 'Semester harus diisi',
             'semester.min_digits' => 'Semester minimal 1 semester'
         ];
@@ -126,7 +129,6 @@ class MataKuliahController extends Controller
             'nama_mk' => 'required',
             'sks' => 'required|min_digits:1',
             't_p' => 'required',
-            'kelas' => 'required|min:2|max:2',
             'semester' => 'required|min_digits:1'
         ], $messages);
 

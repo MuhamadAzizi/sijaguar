@@ -34,9 +34,13 @@
                             <input type="text" class="form-control" name="nama_mk" value="{{ old('nama_mk') }}">
                         </div>
                         <div
-                            class="input-group input-group-outline mb-3 @error('dosen') is-invalid is-filled @enderror {{ old('dosen') ? 'is-valid is-filled' : '' }}">
-                            <label class="form-label">Dosen</label>
-                            <input type="text" class="form-control" name="dosen" value="{{ old('dosen') }}">
+                            class="input-group input-group-static mb-3 @error('dosen_id') is-invalid is-filled @enderror {{ old('dosen_id') ? 'is-valid is-filled' : '' }}">
+                            <label for="exampleFormControlSelect1" class="ms-0">Dosen</label>
+                            <select class="form-control" id="exampleFormControlSelect1" name="dosen_id">
+                                @foreach ($dosen as $row)
+                                <option value="{{ $row->id }}">{{ $row->nama_dosen }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div
                             class="input-group input-group-outline mb-3 @error('sks') is-invalid is-filled @enderror {{ old('sks') ? 'is-valid is-filled' : '' }}">
@@ -45,16 +49,11 @@
                         </div>
                         <div
                             class="input-group input-group-static mb-3 @error('t_p') is-invalid is-filled @enderror {{ old('t_p') ? 'is-valid is-filled' : '' }}">
-                            <label for="exampleFormControlSelect1" class="ms-0">Teori / Praktek</label>
-                            <select class="form-control" id="exampleFormControlSelect1" name="t_p">
+                            <label for="exampleFormControlSelect2" class="ms-0">Teori / Praktek</label>
+                            <select class="form-control" id="exampleFormControlSelect2" name="t_p">
                                 <option value="T" {{ (old('t_p')=='T' ) ? 'selected' : '' }}>Teori</option>
                                 <option value="P" {{ (old('t_p')=='P' ) ? 'selected' : '' }}>Praktek</option>
                             </select>
-                        </div>
-                        <div
-                            class="input-group input-group-outline mb-3 @error('kelas') is-invalid is-filled @enderror {{ old('kelas') ? 'is-valid is-filled' : '' }}">
-                            <label class="form-label">Kelas</label>
-                            <input type="text" class="form-control" name="kelas" value="{{ old('kelas') }}">
                         </div>
                         <div
                             class="input-group input-group-outline mb-3 @error('semester') is-invalid is-filled @enderror {{ old('semester') ? 'is-valid is-filled' : '' }}">

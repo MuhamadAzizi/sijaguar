@@ -24,7 +24,7 @@
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3">Tambah User</h6>
+                        <h6 class="text-white text-capitalize ps-3">Tambah Dosen</h6>
                     </div>
                 </div>
                 <div class="card-body pb-2">
@@ -38,29 +38,30 @@
                     </div>
                     @endif
 
-                    <form action="{{ route('user.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('dosen.store') }}" method="post">
                         @csrf
-                        <div class="w-100">
-                            <label for="formFile" class="form-label">Foto</label>
-                            <input class="form-control border p-2" type="file" id="formFile" name="foto">
+                        <div
+                            class="input-group input-group-outline my-3 @error('kode_dosen') is-invalid is-filled @enderror {{ old('kode_dosen') ? 'is-valid is-filled' : '' }}">
+                            <label class="form-label">Kode Dosen</label>
+                            <input type="text" class="form-control" name="kode_dosen" value="{{ old('kode_dosen') }}">
                         </div>
                         <div
-                            class="input-group input-group-outline my-3 @error('username') is-invalid is-filled @enderror {{ old('username') ? 'is-valid is-filled' : '' }}">
-                            <label class="form-label">Username</label>
-                            <input type="text" class="form-control" name="username" value="{{ old('username') }}">
+                            class="input-group input-group-outline my-3 @error('nama_dosen') is-invalid is-filled @enderror {{ old('nama_dosen') ? 'is-valid is-filled' : '' }}">
+                            <label class="form-label">Nama Dosen</label>
+                            <input type="text" class="form-control" name="nama_dosen" value="{{ old('nama_dosen') }}">
                         </div>
                         <div
-                            class="input-group input-group-outline my-3 @error('nama') is-invalid is-filled @enderror {{ old('nama') ? 'is-valid is-filled' : '' }}">
-                            <label class="form-label">Nama</label>
-                            <input type="text" class="form-control" name="nama" value="{{ old('nama') }}">
+                            class="input-group input-group-outline my-3 @error('no_telp') is-invalid is-filled @enderror {{ old('no_telp') ? 'is-valid is-filled' : '' }}">
+                            <label class="form-label">No Telp</label>
+                            <input type="text" class="form-control" name="no_telp" value={{ old('no_telp') }}>
                         </div>
                         <div
-                            class="input-group input-group-outline my-3 @error('password') is-invalid is-filled @enderror">
-                            <label class="form-label">Password</label>
-                            <input type="password" class="form-control" name="password">
+                            class="input-group input-group-outline my-3 @error('email') is-invalid is-filled @enderror {{ old('email') ? 'is-valid is-filled' : '' }}">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" value={{ old('email') }}>
                         </div>
                         <button type="submit" class="btn bg-gradient-info">
-                            Buat User
+                            Tambah Dosen
                         </button>
                     </form>
                 </div>

@@ -18,6 +18,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="refresh" content="30">
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('img/apple-icon.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
     <title>
@@ -48,19 +49,11 @@
         <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
             data-scroll="true">
             <div class="container-fluid py-1 px-3">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                        @foreach (Breadcrumbs::generate(Request::route()->getName()) as $breadcrumb)
-                        @if (!is_null($breadcrumb->url) && !$loop->last)
-                        <li class="breadcrumb-item"><a href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a></li>
-                        @else
-                        <li class="breadcrumb-item active">{{ $breadcrumb->title }}</li>
-                        @endif
-                        @endforeach
-                    </ol>
+                <nav aria-label="breadcrumb" class="d-flex align-items-center">
                     <h6 class="font-weight-bolder mb-0">
-                        {{ $title }}
+                        {{ $title }} {{ $sesi }}
                     </h6>
+                    <a href="{{ route('login.index') }}" class="btn btn-info btn-sm ms-3 m-0">Login</a>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <ul class="navbar-nav ms-auto justify-content-end">
@@ -87,78 +80,79 @@
 
         <div class="container-fluid py-4">
             <div class="row">
-                <div class="col-12 mb-3 d-flex justify-content-end">
-                    <a href="" class="m-0 btn bg-gradient-secondary shadow-secondary">
-                        <i class="fa fa-refresh"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-lg-8 mb-3">
                     <div class="card">
-                        <div class="card-header pb-0 p-3">
+                        <div class="card-header p-3">
                             <div class="row">
                                 <div class="col-12 d-flex align-items-center justify-content-between">
                                     <h6 class="mb-0">Perkuliahan Hari Ini</h6>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body p-3">
-                            <table class="table datatable table-responsive w-100 align-items-center mb-0">
+                        <div class="card-body p-3 border-top">
+                            <table class="table table-responsive w-100 align-items-center mb-0">
                                 <thead>
                                     <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
                                             Nama Mata Kuliah</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
                                             Dosen</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
                                             Kelas</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
                                             Waktu</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
                                             Ruang</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
                                             Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($verifikasi_jadwal as $row)
-                                    <tr
-                                        class="{{ ($row->status == 'Hadir') ? 'bg-success text-white' : (($row->status == 'Tidak Hadir') ? 'bg-danger text-white' : '') }}">
+                                    @forelse ($verifikasi_jadwal as $row)
+                                    <tr>
                                         <td class="align-middle">
-                                            <p class="text-xs font-weight-bold mb-0">
+                                            <p class="text-sm font-weight-bold mb-0">
                                                 {{ $row->nama_mk }}
                                             </p>
                                         </td>
                                         <td class="align-middle">
-                                            <p class="text-xs font-weight-bold mb-0">
+                                            <p class="text-sm font-weight-bold mb-0">
                                                 {{ $row->dosen }}
                                             </p>
                                         </td>
                                         <td class="align-middle">
-                                            <p class="text-xs font-weight-bold mb-0">
+                                            <p class="text-sm font-weight-bold mb-0">
                                                 {{ $row->kelas }}
                                             </p>
                                         </td>
                                         <td class="align-middle">
-                                            <p class="text-xs font-weight-bold mb-0">
+                                            <p class="text-sm font-weight-bold mb-0">
                                                 {{ $row->jam_mulai }}
                                                 -
                                                 {{ $row->jam_selesai }}
                                             </p>
                                         </td>
                                         <td class="align-middle">
-                                            <p class="text-xs font-weight-bold mb-0">
+                                            <p class="text-sm font-weight-bold mb-0">
                                                 {{ $row->no_ruangan }}
                                             </p>
                                         </td>
-                                        <td class="align-middle">
-                                            <p class="text-xs font-weight-bold mb-0">
+                                        <td
+                                            class="align-middle {{ ($row->status == 'Hadir') ? 'bg-success text-white' : (($row->status == 'Tidak Hadir') ? 'bg-danger text-white' : (($row->status == 'Menunggu') ? 'bg-warning text-white' : '')) }}">
+                                            <p class="text-sm font-weight-bold mb-0">
                                                 {{ $row->status }}
                                             </p>
                                         </td>
                                     </tr>
-                                    @endforeach
+                                    @empty
+                                    <tr>
+                                        <td colspan="6" class="text-center">
+                                            <p class="text-sm font-weight-bold mb-0">
+                                                Tidak ada data
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -167,62 +161,54 @@
 
                 <div class="col-lg-4 mb-3">
                     <div class="card">
-                        <div class="card-header pb-0 p-3">
+                        <div class="card-header p-3">
                             <div class="row">
                                 <div class="col-12 d-flex align-items-center justify-content-between">
                                     <h6 class="mb-0">Jadwal Penggunaan Ruangan Hari Ini</h6>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body p-3">
-                            <table class="table datatable table-responsive w-100 mb-0">
+                        <div class="card-body p-3 border-top">
+                            <table class="table table-responsive w-100 mb-0">
                                 <thead>
                                     <tr>
-                                        <th
-                                            class="text-secondary text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        <th class="text-dark text-uppercase text-dark text-xs font-weight-bolder ps-2">
                                             Ruangan</th>
-                                        <th
-                                            class="text-secondary text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        <th class="text-dark text-uppercase text-dark text-xs font-weight-bolder ps-2">
                                             Waktu</th>
-                                        <th
-                                            class="text-secondary text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
+                                        <th class="text-dark text-uppercase text-dark text-xs font-weight-bolder ps-2">
                                             Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($penggunaan as $row)
+                                    @forelse ($penggunaan as $row)
                                     <tr>
                                         <td class="align-middle">
-                                            <p class="text-xs font-weight-bold mb-0">
+                                            <p class="text-sm font-weight-bold mb-0">
                                                 {{ $row->nama_jenis_ruangan }}
                                             </p>
                                         </td>
                                         <td class="align-middle">
-                                            <p class="text-xs font-weight-bold mb-0">
+                                            <p class="text-sm font-weight-bold mb-0">
                                                 {{ $row->jam_masuk }} - {{ $row->jam_keluar }}
                                             </p>
                                         </td>
-                                        <td class="align-middle">
-                                            @if ($row->status == 'Menunggu')
-                                            <p class="text-xs text-warning font-weight-bold mb-0">
+                                        <td
+                                            class="align-middle {{ ($row->status == 'Diterima') ? 'bg-success text-white' : (($row->status == 'Ditolak') ? 'bg-danger text-white' : (($row->status == 'Menunggu') ? 'bg-warning text-white' : (($row->status == 'Selesai') ? 'bg-secondary text-white' : ''))) }}">
+                                            <p class="text-sm text-warning font-weight-bold mb-0">
                                                 {{ $row->status }}
                                             </p>
-                                            @elseif ($row->status == 'Diterima')
-                                            <p class="text-xs text-success font-weight-bold mb-0">
-                                                {{ $row->status }}
-                                            </p>
-                                            @elseif ($row->status == 'Ditolak')
-                                            <p class="text-xs text-danger font-weight-bold mb-0">
-                                                {{ $row->status }}
-                                            </p>
-                                            @elseif ($row->status == 'Selesai')
-                                            <p class="text-xs text-secondary font-weight-bold mb-0">
-                                                {{ $row->status }}
-                                            </p>
-                                            @endif
                                         </td>
                                     </tr>
-                                    @endforeach
+                                    @empty
+                                    <tr>
+                                        <td colspan="3" class="text-center">
+                                            <p class="text-sm font-weight-bold mb-0">
+                                                Tidak ada data
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

@@ -29,7 +29,11 @@ class JadwalController extends Controller
             $data['jadwal'] = Jadwal::join('mata_kuliah', 'jadwal.mata_kuliah_id', '=', 'mata_kuliah.id')
                 ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
                 ->join('tahun_akademik', 'jadwal.tahun_akademik_id', '=', 'tahun_akademik.id')
-                ->select('jadwal.*', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'mata_kuliah.dosen', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'mata_kuliah.kelas', 'ruangan.no_ruangan', 'tahun_akademik.tahun_akademik', 'tahun_akademik.status')
+                ->leftJoin('dosen', function ($join) {
+                    $join->on('mata_kuliah.dosen_id', 'dosen.id')
+                        ->whereNotNull('mata_kuliah.dosen_id');
+                })
+                ->select('jadwal.*', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'dosen.nama_dosen as dosen', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'ruangan.no_ruangan', 'tahun_akademik.tahun_akademik', 'tahun_akademik.status')
                 ->where('tahun_akademik.status', 'Aktif')
                 ->get();
         } elseif (Auth::user()->level == 'User') {
@@ -38,7 +42,11 @@ class JadwalController extends Controller
                 ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
                 ->join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
                 ->join('mata_kuliah', 'jadwal.mata_kuliah_id', '=', 'mata_kuliah.id')
-                ->select('jadwal_user.id', 'jadwal.hari', 'jadwal.jam_mulai', 'jadwal.jam_selesai', 'ruangan.no_ruangan', 'jenis_ruangan.nama_jenis_ruangan', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'mata_kuliah.dosen', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'mata_kuliah.kelas', 'tahun_akademik.status')
+                ->leftJoin('dosen', function ($join) {
+                    $join->on('mata_kuliah.dosen_id', 'dosen.id')
+                        ->whereNotNull('mata_kuliah.dosen_id');
+                })
+                ->select('jadwal_user.id', 'jadwal.hari', 'jadwal.jam_mulai', 'jadwal.jam_selesai', 'ruangan.no_ruangan', 'jenis_ruangan.nama_jenis_ruangan', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'dosen.nama_dosen as dosen', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'tahun_akademik.status')
                 ->where('jadwal_user.user_id', Auth::user()->id)
                 ->where('tahun_akademik.status', 'Aktif')
                 ->get();
@@ -81,6 +89,14 @@ class JadwalController extends Controller
     public function store(Request $request)
     {
         if (Auth::user()->level == 'Admin') {
+            $messages = [
+                'kelas.required' => 'Kelas wajib diisi',
+            ];
+
+            $request->validate([
+                'kelas' => 'required'
+            ], $messages);
+
             Jadwal::create($request->all());
         } elseif (Auth::user()->level == 'User') {
             JadwalUser::create([
@@ -133,6 +149,14 @@ class JadwalController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $messages = [
+            'kelas.required' => 'Kelas wajib diisi',
+        ];
+
+        $request->validate([
+            'kelas' => 'required'
+        ], $messages);
+
         Jadwal::find($id)->update($request->all());
 
         return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil diubah');

@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-12 d-flex align-items-center justify-content-between">
                             <h6 class="mb-0">Verifikasi Jadwal</h6>
-                            <a href="{{ route('verifikasi-jadwal.view-mode') }}" class="m-0 btn bg-gradient-info">
+                            <a href="{{ route('view.index') }}" class="m-0 btn bg-gradient-info">
                                 <i class="fas fa-eye"></i>
                                 &nbsp;View Mode
                             </a>
@@ -89,8 +89,7 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($verifikasi_jadwal as $row)
-                                            <tr
-                                                class="{{ ($row->status == 'Hadir') ? 'bg-success text-white' : (($row->status == 'Tidak Hadir') ? 'bg-danger text-white' : '') }}">
+                                            <tr>
                                                 <td class="align-middle">
                                                     <h6 class="mb-0 text-sm ps-3">
                                                         {{ $row->kode_mk }}
@@ -138,7 +137,8 @@
                                                         {{ $row->no_ruangan }}
                                                     </p>
                                                 </td>
-                                                <td class="align-middle">
+                                                <td
+                                                    class="align-middle {{ ($row->status == 'Hadir') ? 'bg-success text-white' : (($row->status == 'Tidak Hadir') ? 'bg-danger text-white' : (($row->status == 'Menunggu') ? 'bg-warning text-white' : '')) }}">
                                                     <p class="text-xs font-weight-bold mb-0">
                                                         {{ $row->status }}
                                                     </p>

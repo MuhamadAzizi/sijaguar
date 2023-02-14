@@ -44,6 +44,11 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div
+                            class="input-group input-group-static my-3 @error('kelas') is-invalid is-filled @enderror is-filled">
+                            <label class="form-label">Kelas</label>
+                            <input type="text" class="form-control" name="kelas" value="{{ $jadwal->kelas }}">
+                        </div>
                         <div class="row">
                             <div class="col-md-4 col-12">
                                 <div class="input-group input-group-static my-3">

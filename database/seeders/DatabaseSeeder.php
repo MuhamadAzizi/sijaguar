@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             JenisRuanganSeeder::class,
             RuanganSeeder::class,
             TahunAkademikSeeder::class,
+            DosenSeeder::class,
             MataKuliahSeeder::class,
             JadwalSeeder::class,
             JadwalUserSeeder::class

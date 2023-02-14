@@ -50,9 +50,6 @@
                                         T / P</th>
                                     <th
                                         class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
-                                        Kelas</th>
-                                    <th
-                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         Semester</th>
                                     <th
                                         class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
@@ -74,7 +71,7 @@
                                     </td>
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            {{ $row->dosen }}
+                                            {{ $row->nama_dosen }}
                                         </p>
                                     </td>
                                     <td class="align-middle">
@@ -85,11 +82,6 @@
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
                                             {{ $row->t_p }}
-                                        </p>
-                                    </td>
-                                    <td class="align-middle">
-                                        <p class="text-xs font-weight-bold mb-0">
-                                            {{ $row->kelas }}
                                         </p>
                                     </td>
                                     <td class="align-middle">

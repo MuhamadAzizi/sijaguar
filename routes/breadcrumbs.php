@@ -99,6 +99,23 @@ Breadcrumbs::for('verifikasi-jadwal.view-mode', function (BreadcrumbTrail $trail
     $trail->push('View Mode', route('verifikasi-jadwal.view-mode'));
 });
 
+// Dosen
+Breadcrumbs::for('dosen.index', function (BreadcrumbTrail $trail) {
+    $trail->push('Dosen', route('dosen.index'));
+});
+
+// Dosen > Tambah Dosen
+Breadcrumbs::for('dosen.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('dosen.index');
+    $trail->push('Tambah Dosen', route('dosen.create'));
+});
+
+// Dosen > Edit Dosen
+Breadcrumbs::for('dosen.edit', function (BreadcrumbTrail $trail) {
+    $trail->parent('dosen.index');
+    $trail->push('Edit Dosen', route('dosen.edit', 1));
+});
+
 // User
 Breadcrumbs::for('user.index', function (BreadcrumbTrail $trail) {
     $trail->push('User', route('user.index'));

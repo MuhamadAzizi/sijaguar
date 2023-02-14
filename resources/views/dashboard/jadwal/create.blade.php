@@ -13,6 +13,17 @@
                 <div class="card-body pb-2">
 
                     @if (Auth::user()->level == 'Admin')
+
+                    @if ($errors->any())
+                    <div class="alert alert-danger text-white" role="alert">
+                        <ul class="m-0">
+                            @foreach ($errors->all() as $error)
+                            <li><small>{{ $error }}</small></li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
                     <form action="{{ route('jadwal.store') }}" method="post">
                         @csrf
 
@@ -40,6 +51,11 @@
                                 </option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div
+                            class="input-group input-group-static my-3 @error('kelas') is-invalid is-filled @enderror {{ old('kelas') ? 'is-valid is-filled' : '' }}">
+                            <label class="form-label">Kelas</label>
+                            <input type="text" class="form-control" name="kelas" value="{{ old('kelas') }}">
                         </div>
                         <div class="row">
                             <div class="col-md-4 col-12">
@@ -81,6 +97,7 @@
                             <select class="form-control" id="form-label" name="jadwal_id">
                                 @foreach ($jadwal as $row)
                                 <option value="{{ $row->id }}">
+                                    {{ $row->kelas }} -
                                     {{ $row->kode_mk }} -
                                     {{ $row->nama_mk }} -
                                     {{ $row->hari }},

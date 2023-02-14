@@ -34,26 +34,25 @@
                             <label class="form-label">Mata Kuliah</label>
                             <input type="text" class="form-control" name="nama_mk" value="{{ $mata_kuliah->nama_mk }}">
                         </div>
-                        <div
-                            class="input-group input-group-outline my-3 @error('dosen') is-invalid @enderror is-filled">
-                            <label class="form-label">Dosen</label>
-                            <input type="text" class="form-control" name="dosen" value="{{ $mata_kuliah->dosen }}">
+                        <div class="input-group input-group-static mb-3 @error('dosen') is-invalid @enderror is-filled">
+                            <label for="exampleFormControlSelect2" class="ms-0">Dosen</label>
+                            <select class="form-control" id="exampleFormControlSelect2" name="dosen_id">
+                                @foreach ($dosen as $row)
+                                <option value="{{ $row->id }}" {{ ($row->id == $mata_kuliah->dosen_id) ? 'selected' : ''
+                                    }} >{{ $row->nama_dosen }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="input-group input-group-outline my-3 @error('sks') is-invalid @enderror is-filled">
                             <label class="form-label">SKS</label>
                             <input type="number" class="form-control" name="sks" value="{{ $mata_kuliah->sks }}">
                         </div>
                         <div class="input-group input-group-static mb-3 @error('t_p') is-invalid @enderror is-filled">
-                            <label for="exampleFormControlSelect1" class="ms-0">Teori / Praktek</label>
-                            <select class="form-control" id="exampleFormControlSelect1" name="t_p">
+                            <label for="exampleFormControlSelect2" class="ms-0">Teori / Praktek</label>
+                            <select class="form-control" id="exampleFormControlSelect2" name="t_p">
                                 <option value="T" {{ ($mata_kuliah->t_p == 'T' ) ? 'selected' : '' }}>Teori</option>
                                 <option value="P" {{ ($mata_kuliah->t_p =='P' ) ? 'selected' : '' }}>Praktek</option>
                             </select>
-                        </div>
-                        <div
-                            class="input-group input-group-outline my-3 @error('kelas') is-invalid @enderror is-filled">
-                            <label class="form-label">Kelas</label>
-                            <input type="text" class="form-control" name="kelas" value="{{ $mata_kuliah->kelas }}">
                         </div>
                         <div
                             class="input-group input-group-outline my-3 @error('semester') is-invalid @enderror is-filled">
