@@ -28,7 +28,7 @@ class JenisRuanganController extends Controller
             'title' => 'Tambah Jenis Ruangan'
         ];
 
-        return view('dashboard/jenis_ruangan/create', $data);
+        return view('dashboard.jenis_ruangan.create', $data);
     }
 
     /**
@@ -76,7 +76,7 @@ class JenisRuanganController extends Controller
             'jenis_ruangan' => JenisRuangan::find($id)
         ];
 
-        return view('dashboard/jenis_ruangan/edit', $data);
+        return view('dashboard.jenis_ruangan.edit', $data);
     }
 
     /**

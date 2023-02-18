@@ -21,7 +21,7 @@ class UserController extends Controller
             'user' => User::where('level', 'User')->get()
         ];
 
-        return view('dashboard/user/index', $data);
+        return view('dashboard.user.index', $data);
     }
 
     /**
@@ -35,7 +35,7 @@ class UserController extends Controller
             'title' => 'Tambah User'
         ];
 
-        return view('dashboard/user/create', $data);
+        return view('dashboard.user.create', $data);
     }
 
     /**
@@ -80,18 +80,15 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $user = User::find($id);
+
         $data = [
             'title' => 'Detail User',
-            'user' => User::find($id),
-            'penggunaan' => Penggunaan::join('ruangan', 'penggunaan.ruangan_id', '=', 'ruangan.id')
-                ->join('users', 'penggunaan.user_id', '=', 'users.id')
-                ->join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
-                ->select('penggunaan.*', 'ruangan.no_ruangan', 'jenis_ruangan.nama_jenis_ruangan', 'users.username')
-                ->where('user_id', $id)
-                ->get()
+            'user' => $user,
+            'penggunaan' => Penggunaan::whereBelongsTo($user)->get()
         ];
 
-        return view('dashboard/user/show', $data);
+        return view('dashboard.user.show', $data);
     }
 
     /**
@@ -107,7 +104,7 @@ class UserController extends Controller
             'user' => User::find($id)
         ];
 
-        return view('dashboard/user/edit', $data);
+        return view('dashboard.user.edit', $data);
     }
 
     /**

@@ -11,4 +11,9 @@ class TahunAkademik extends Model
 
     protected $table = 'tahun_akademik';
     protected $fillable = ['tahun_akademik', 'semester', 'status'];
+
+    public function jadwal()
+    {
+        return $this->hasMany(Jadwal::class);
+    }
 }

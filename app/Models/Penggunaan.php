@@ -10,5 +10,23 @@ class Penggunaan extends Model
     use HasFactory;
 
     protected $table = 'penggunaan';
-    protected $fillable = ['user_id', 'ruangan_id', 'tanggal_penggunaan', 'jam_masuk', 'jam_keluar', 'status', 'keterangan'];
+    protected $fillable = [
+        'user_id',
+        'ruangan_id',
+        'tanggal_penggunaan',
+        'jam_masuk',
+        'jam_keluar',
+        'status',
+        'keterangan'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function ruangan()
+    {
+        return $this->belongsTo(Ruangan::class);
+    }
 }

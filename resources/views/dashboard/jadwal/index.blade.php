@@ -124,27 +124,27 @@
                                 <tr>
                                     <td class="align-middle">
                                         <h6 class="mb-0 text-sm ps-3">
-                                            {{ $row->kode_mk }}
+                                            {{ $row->mataKuliah->kode_mk }}
                                         </h6>
                                     </td>
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            {{ $row->nama_mk }}
+                                            {{ $row->mataKuliah->nama_mk }}
                                         </p>
                                     </td>
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            {{ $row->dosen }}
+                                            {{ $row->mataKuliah->dosen->nama_dosen }}
                                         </p>
                                     </td>
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            {{ $row->sks }}
+                                            {{ $row->mataKuliah->sks }}
                                         </p>
                                     </td>
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            {{ $row->t_p }}
+                                            {{ $row->mataKuliah->t_p }}
                                         </p>
                                     </td>
                                     <td class="align-middle">
@@ -165,7 +165,7 @@
                                     </td>
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            {{ $row->no_ruangan }}
+                                            {{ $row->ruangan->no_ruangan }}
                                         </p>
                                     </td>
                                     <td class="align-middle">

@@ -1,4 +1,4 @@
-@extends('dashboard/master')
+@extends('dashboard.master')
 @section('title', $title)
 @section('content')
 <div class="container-fluid py-4">
@@ -34,12 +34,12 @@
                                 <div class="input-group input-group-static">
                                     <label for="form-label" class="ms-0">Ruangan</label>
                                     <select class="form-control" id="form-label" name="ruangan_id">
-                                        <?php foreach ($ruangan as $r) : ?>
-                                        <option value="<?= $r['id'] ?>">
-                                            <?= $r['no_ruangan'] ?> -
-                                            <?= $r['nama_jenis_ruangan'] ?>
+                                        @foreach ($ruangan as $row)
+                                        <option value="{{ $row->id }}">
+                                            {{ $row->no_ruangan }} -
+                                            {{ $row->nama_jenis_ruangan }}
                                         </option>
-                                        <?php endforeach; ?>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@
                                     </td>
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            {{ $row->nama_jenis_ruangan }}
+                                            {{ $row->jenisRuangan->nama_jenis_ruangan }}
                                         </p>
                                     </td>
                                     <td class="align-middle">
@@ -205,7 +205,7 @@
                                     </td>
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            {{ $row->nama_jenis_ruangan }}
+                                            {{ $row->jenisRuangan->nama_jenis_ruangan }}
                                         </p>
                                     </td>
                                 </tr>

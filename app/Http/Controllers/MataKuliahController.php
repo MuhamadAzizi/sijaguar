@@ -17,15 +17,10 @@ class MataKuliahController extends Controller
     {
         $data = [
             'title' => 'Mata Kuliah',
-            'mata_kuliah' => MataKuliah::select('mata_kuliah.*', 'dosen.nama_dosen')
-                ->leftJoin('dosen', function ($join) {
-                    $join->on('mata_kuliah.dosen_id', 'dosen.id')
-                        ->whereNotNull('mata_kuliah.dosen_id');
-                })
-                ->get()
+            'mata_kuliah' => MataKuliah::all()
         ];
 
-        return view('dashboard/mata_kuliah/index', $data);
+        return view('dashboard.mata_kuliah.index', $data);
     }
 
     /**
@@ -40,7 +35,7 @@ class MataKuliahController extends Controller
             'dosen' => Dosen::all()
         ];
 
-        return view('dashboard/mata_kuliah/create', $data);
+        return view('dashboard.mata_kuliah.create', $data);
     }
 
     /**
@@ -97,11 +92,11 @@ class MataKuliahController extends Controller
     {
         $data = [
             'title' => 'Edit Mata Kuliah',
-            'mata_kuliah' => MataKuliah::find($id),
+            'mata_kuliah' => MataKuliah::findOrFail($id),
             'dosen' => Dosen::all(),
         ];
 
-        return view('dashboard/mata_kuliah/edit', $data);
+        return view('dashboard.mata_kuliah.edit', $data);
     }
 
     /**
@@ -132,7 +127,7 @@ class MataKuliahController extends Controller
             'semester' => 'required|min_digits:1'
         ], $messages);
 
-        MataKuliah::find($id)->update($request->all());
+        MataKuliah::findOrFail($id)->update($request->all());
 
         return redirect()->route('mata-kuliah.index')
             ->with('success', 'Mata Kuliah berhasil diubah');

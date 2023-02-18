@@ -16,4 +16,10 @@ class Dosen extends Model
         'no_telp',
         'email'
     ];
+
+    // One to one dosen ke mata kuliah
+    public function mataKuliah()
+    {
+        return $this->hasOne(MataKuliah::class);
+    }
 }

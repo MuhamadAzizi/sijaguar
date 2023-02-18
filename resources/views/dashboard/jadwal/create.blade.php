@@ -36,7 +36,7 @@
                                 @foreach ($ruangan as $row)
                                 <option value="{{ $row->id }}">
                                     {{ $row->no_ruangan }} -
-                                    {{ $row->nama_jenis_ruangan }}
+                                    {{ $row->jenisRuangan->nama_jenis_ruangan }}
                                 </option>
                                 @endforeach
                             </select>
@@ -98,8 +98,8 @@
                                 @foreach ($jadwal as $row)
                                 <option value="{{ $row->id }}">
                                     {{ $row->kelas }} -
-                                    {{ $row->kode_mk }} -
-                                    {{ $row->nama_mk }} -
+                                    {{ $row->mataKuliah->kode_mk }} -
+                                    {{ $row->mataKuliah->nama_mk }} -
                                     {{ $row->hari }},
                                     {{ $row->jam_mulai }}-
                                     {{ $row->jam_selesai }}

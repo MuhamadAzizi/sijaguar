@@ -18,4 +18,15 @@ class MataKuliah extends Model
         't_p',
         'semester'
     ];
+
+    public function jadwal()
+    {
+        return $this->hasMany(Jadwal::class);
+    }
+
+    // Reverse one to one dosen ke mata kuliah
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class)->withDefault();
+    }
 }

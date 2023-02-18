@@ -9,6 +9,7 @@ use App\Models\JadwalUser;
 use App\Models\TahunAkademik;
 use App\Models\Ruangan;
 use App\Models\MataKuliah;
+use App\Models\User;
 
 class JadwalController extends Controller
 {
@@ -26,33 +27,12 @@ class JadwalController extends Controller
 
         // Pengaturan kondisi level untuk menampilkan data jadwal
         if (Auth::user()->level == 'Admin') {
-            $data['jadwal'] = Jadwal::join('mata_kuliah', 'jadwal.mata_kuliah_id', '=', 'mata_kuliah.id')
-                ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
-                ->join('tahun_akademik', 'jadwal.tahun_akademik_id', '=', 'tahun_akademik.id')
-                ->leftJoin('dosen', function ($join) {
-                    $join->on('mata_kuliah.dosen_id', 'dosen.id')
-                        ->whereNotNull('mata_kuliah.dosen_id');
-                })
-                ->select('jadwal.*', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'dosen.nama_dosen as dosen', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'ruangan.no_ruangan', 'tahun_akademik.tahun_akademik', 'tahun_akademik.status')
-                ->where('tahun_akademik.status', 'Aktif')
-                ->get();
+            $data['jadwal'] = Jadwal::whereBelongsTo($data['tahun_akademik'])->get();
         } elseif (Auth::user()->level == 'User') {
-            $data['jadwal'] = JadwalUser::join('jadwal', 'jadwal_user.jadwal_id', '=', 'jadwal.id')
-                ->join('tahun_akademik', 'jadwal.tahun_akademik_id', '=', 'tahun_akademik.id')
-                ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
-                ->join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
-                ->join('mata_kuliah', 'jadwal.mata_kuliah_id', '=', 'mata_kuliah.id')
-                ->leftJoin('dosen', function ($join) {
-                    $join->on('mata_kuliah.dosen_id', 'dosen.id')
-                        ->whereNotNull('mata_kuliah.dosen_id');
-                })
-                ->select('jadwal_user.id', 'jadwal.hari', 'jadwal.jam_mulai', 'jadwal.jam_selesai', 'ruangan.no_ruangan', 'jenis_ruangan.nama_jenis_ruangan', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'dosen.nama_dosen as dosen', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'tahun_akademik.status')
-                ->where('jadwal_user.user_id', Auth::user()->id)
-                ->where('tahun_akademik.status', 'Aktif')
-                ->get();
+            $data['jadwal'] = User::find(Auth::user()->id)->jadwal()->whereBelongsTo($data['tahun_akademik'])->get();
         }
 
-        return view('dashboard/jadwal/index', $data);
+        return view('dashboard.jadwal.index', $data);
     }
 
     /**
@@ -62,22 +42,17 @@ class JadwalController extends Controller
      */
     public function create()
     {
+        $tahun_akademik = TahunAkademik::where('status', 'Aktif')->latest()->first();
+
         $data = [
             'title' => 'Tambah Jadwal',
-            'tahun_akademik' => TahunAkademik::where('status', 'Aktif')->latest()->first(),
-            'ruangan' => Ruangan::join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
-                ->select('ruangan.*', 'jenis_ruangan.nama_jenis_ruangan')
-                ->get(),
+            'tahun_akademik' => $tahun_akademik,
+            'ruangan' => Ruangan::all(),
             'mata_kuliah' => MataKuliah::all(),
-            'jadwal' => Jadwal::join('mata_kuliah', 'jadwal.mata_kuliah_id', '=', 'mata_kuliah.id')
-                ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
-                ->join('tahun_akademik', 'jadwal.tahun_akademik_id', '=', 'tahun_akademik.id')
-                ->select('jadwal.*', 'mata_kuliah.*', 'ruangan.no_ruangan', 'tahun_akademik.tahun_akademik', 'tahun_akademik.status')
-                ->where('tahun_akademik.status', 'Aktif')
-                ->get()
+            'jadwal' => Jadwal::whereBelongsTo($tahun_akademik)->get(),
         ];
 
-        return view('dashboard/jadwal/create', $data);
+        return view('dashboard.jadwal.create', $data);
     }
 
     /**
@@ -131,13 +106,11 @@ class JadwalController extends Controller
             'title' => 'Edit Jadwal',
             'jadwal' => Jadwal::find($id),
             'tahun_akademik' => TahunAkademik::where('status', 'Aktif')->latest()->first(),
-            'ruangan' => Ruangan::join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
-                ->select('ruangan.*', 'jenis_ruangan.nama_jenis_ruangan')
-                ->get(),
+            'ruangan' => Ruangan::all(),
             'mata_kuliah' => MataKuliah::all()
         ];
 
-        return view('dashboard/jadwal/edit', $data);
+        return view('dashboard.jadwal.edit', $data);
     }
 
     /**
