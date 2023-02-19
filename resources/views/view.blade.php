@@ -53,7 +53,10 @@
                     <h6 class="font-weight-bolder mb-0">
                         {{ $title }} {{ $sesi }}
                     </h6>
+
+                    @if (!Auth::check())
                     <a href="{{ route('login.index') }}" class="btn btn-info btn-sm ms-3 m-0">Login</a>
+                    @endif
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <ul class="navbar-nav ms-auto justify-content-end">
@@ -112,29 +115,29 @@
                                     <tr>
                                         <td class="align-middle">
                                             <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->nama_mk }}
+                                                {{ $row->jadwal->mataKuliah->nama_mk }}
                                             </p>
                                         </td>
                                         <td class="align-middle">
                                             <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->dosen }}
+                                                {{ $row->jadwal->mataKuliah->dosen->nama_dosen }}
                                             </p>
                                         </td>
                                         <td class="align-middle">
                                             <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->kelas }}
+                                                {{ $row->jadwal->kelas }}
                                             </p>
                                         </td>
                                         <td class="align-middle">
                                             <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->jam_mulai }}
+                                                {{ $row->jadwal->jam_mulai }}
                                                 -
-                                                {{ $row->jam_selesai }}
+                                                {{ $row->jadwal->jam_selesai }}
                                             </p>
                                         </td>
                                         <td class="align-middle">
                                             <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->no_ruangan }}
+                                                {{ $row->jadwal->ruangan->no_ruangan }}
                                             </p>
                                         </td>
                                         <td
@@ -185,7 +188,7 @@
                                     <tr>
                                         <td class="align-middle">
                                             <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->nama_jenis_ruangan }}
+                                                {{ $row->ruangan->jenisRuangan->nama_jenis_ruangan }}
                                             </p>
                                         </td>
                                         <td class="align-middle">
@@ -195,7 +198,7 @@
                                         </td>
                                         <td
                                             class="align-middle {{ ($row->status == 'Diterima') ? 'bg-success text-white' : (($row->status == 'Ditolak') ? 'bg-danger text-white' : (($row->status == 'Menunggu') ? 'bg-warning text-white' : (($row->status == 'Selesai') ? 'bg-secondary text-white' : ''))) }}">
-                                            <p class="text-sm text-warning font-weight-bold mb-0">
+                                            <p class="text-sm font-weight-bold mb-0">
                                                 {{ $row->status }}
                                             </p>
                                         </td>

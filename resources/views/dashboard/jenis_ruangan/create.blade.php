@@ -29,7 +29,7 @@
                             <input type="text" class="form-control" name="nama_jenis_ruangan"
                                 value="{{ old('nama_jenis_ruangan') }}">
                         </div>
-                        <button type="submit" class="btn bg-gradient-info">
+                        <button type="submit" class="btn bg-gradient-info" id="store">
                             Tambah
                         </button>
                     </form>
@@ -39,3 +39,27 @@
     </div>
 </div>
 @endsection
+
+<script>
+    $('#store').click(function (e) {
+        e.preventDefault();
+
+        let token = $('input[name=_token]').val();
+        let nama_jenis_ruangan = $('input[name=nama_jenis_ruangan]').val();
+
+        $.ajax({
+            url: "{{ route('jenis-ruangan.store') }}",
+            type: "POST",
+            data: {
+                _token: token,
+                nama_jenis_ruangan: nama_jenis_ruangan,
+            },
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        });
+    })
+</script>

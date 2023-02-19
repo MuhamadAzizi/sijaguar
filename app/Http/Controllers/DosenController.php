@@ -21,7 +21,7 @@ class DosenController extends Controller
             'dosen' => Dosen::all()
         ];
 
-        return view('dashboard/dosen/index', $data);
+        return view('dashboard.dosen.index', $data);
     }
 
     /**
@@ -35,7 +35,7 @@ class DosenController extends Controller
             'title' => 'Tambah Dosen'
         ];
 
-        return view('dashboard/dosen/create', $data);
+        return view('dashboard.dosen.create', $data);
     }
 
     /**
@@ -89,7 +89,7 @@ class DosenController extends Controller
             'dosen' => Dosen::find($id)
         ];
 
-        return view('dashboard/dosen/edit', $data);
+        return view('dashboard.dosen.edit', $data);
     }
 
     /**

@@ -17,18 +17,15 @@ class ProfilController extends Controller
      */
     public function index()
     {
+        $user = User::where('id', Auth::user()->id)->firstOrFail();
+
         $data = [
             'title' => 'Profil',
-            'user' => User::where('id', Auth::user()->id)->firstOrFail(),
-            'penggunaan' => Penggunaan::join('ruangan', 'penggunaan.ruangan_id', '=', 'ruangan.id')
-                ->join('users', 'penggunaan.user_id', '=', 'users.id')
-                ->join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
-                ->select('penggunaan.*', 'ruangan.no_ruangan', 'jenis_ruangan.nama_jenis_ruangan', 'users.username')
-                ->where('user_id', Auth::user()->id)
-                ->get(),
+            'user' => $user,
+            'penggunaan' => Penggunaan::whereBelongsTo($user)->get(),
         ];
 
-        return view('dashboard/profil/index', $data);
+        return view('dashboard.profil.index', $data);
     }
 
     /**
@@ -76,7 +73,7 @@ class ProfilController extends Controller
             'user' => User::where('id', $id)->firstOrFail(),
         ];
 
-        return view('dashboard/profil/edit', $data);
+        return view('dashboard.profil.edit', $data);
     }
 
     /**

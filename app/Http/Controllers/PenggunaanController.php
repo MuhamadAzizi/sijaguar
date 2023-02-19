@@ -17,8 +17,7 @@ class PenggunaanController extends Controller
     public function index()
     {
         $data = [
-            'title' => 'Penggunaan',
-            'ruangan' => Ruangan::all()
+            'title' => 'Penggunaan'
         ];
 
         // Update penggunaan ruangan (naive approach)
@@ -29,21 +28,12 @@ class PenggunaanController extends Controller
 
         // Pengaturan kondisi level untuk menampilkan data penggunaan
         if (Auth::user()->level == 'Admin') {
-            $data['penggunaan'] = Penggunaan::join('ruangan', 'penggunaan.ruangan_id', '=', 'ruangan.id')
-                ->join('users', 'penggunaan.user_id', '=', 'users.id')
-                ->join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
-                ->select('penggunaan.*', 'ruangan.no_ruangan', 'jenis_ruangan.nama_jenis_ruangan', 'users.username')
-                ->get();
+            $data['penggunaan'] = Penggunaan::all();
         } elseif (Auth::user()->level == 'User') {
-            $data['penggunaan'] = Penggunaan::join('ruangan', 'penggunaan.ruangan_id', '=', 'ruangan.id')
-                ->join('users', 'penggunaan.user_id', '=', 'users.id')
-                ->join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
-                ->select('penggunaan.*', 'ruangan.no_ruangan', 'jenis_ruangan.nama_jenis_ruangan', 'users.username')
-                ->where('user_id', Auth::user()->id)
-                ->get();
+            $data['penggunaan'] = Penggunaan::where('user_id', Auth::user()->id)->get();
         }
 
-        return view('dashboard/penggunaan/index', $data);
+        return view('dashboard.penggunaan.index', $data);
     }
 
     /**
@@ -55,12 +45,10 @@ class PenggunaanController extends Controller
     {
         $data = [
             'title' => 'Tambah Penggunaan',
-            'ruangan' => Ruangan::join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
-                ->select('ruangan.*', 'jenis_ruangan.nama_jenis_ruangan')
-                ->get()
+            'ruangan' => Ruangan::all()
         ];
 
-        return view('dashboard/penggunaan/create', $data);
+        return view('dashboard.penggunaan.create', $data);
     }
 
     /**
@@ -120,13 +108,11 @@ class PenggunaanController extends Controller
     {
         $data = [
             'title' => 'Edit Penggunaan',
-            'ruangan' => Ruangan::join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
-                ->select('ruangan.*', 'jenis_ruangan.nama_jenis_ruangan')
-                ->get(),
+            'ruangan' => Ruangan::all(),
             'penggunaan' => Penggunaan::find($id)
         ];
 
-        return view('dashboard/penggunaan/edit', $data);
+        return view('dashboard.penggunaan.edit', $data);
     }
 
     /**

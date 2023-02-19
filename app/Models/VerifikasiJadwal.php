@@ -11,4 +11,9 @@ class VerifikasiJadwal extends Model
 
     protected $table = 'verifikasi_jadwal';
     protected $fillable = ['jadwal_id', 'status'];
+
+    public function jadwal()
+    {
+        return $this->belongsTo(Jadwal::class);
+    }
 }

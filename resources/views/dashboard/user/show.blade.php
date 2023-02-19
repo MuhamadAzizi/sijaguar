@@ -108,18 +108,18 @@
                                     <tr>
                                         <td class="align-middle">
                                             <h6 class="mb-0 text-sm ps-3">
-                                                {{ $row->username }}
+                                                {{ $row->user->username }}
                                             </h6>
                                         </td>
                                         <td class="align-middle">
                                             <p class="text-xs font-weight-bold mb-0">
-                                                {{ $row->no_ruangan }} -
-                                                {{ $row->nama_jenis_ruangan }}
+                                                {{ $row->ruangan->no_ruangan }} -
+                                                {{ $row->ruangan->jenisRuangan->nama_jenis_ruangan }}
                                             </p>
                                         </td>
                                         <td class="align-middle">
                                             <p class="text-xs font-weight-bold mb-0">
-                                                {{ $row->tanggal_pinjam }}
+                                                {{ $row->tanggal_penggunaan }}
                                             </p>
                                         </td>
                                         <td class="align-middle">

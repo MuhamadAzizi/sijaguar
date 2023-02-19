@@ -19,4 +19,29 @@ class Jadwal extends Model
         'jam_selesai',
         'tahun_akademik_id'
     ];
+
+    public function ruangan()
+    {
+        return $this->belongsTo(Ruangan::class);
+    }
+
+    public function mataKuliah()
+    {
+        return $this->belongsTo(MataKuliah::class);
+    }
+
+    public function verifikasiJadwal()
+    {
+        return $this->hasOne(VerifikasiJadwal::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsToMany(User::class, 'jadwal_user');
+    }
+
+    public function tahunAkademik()
+    {
+        return $this->belongsTo(TahunAkademik::class);
+    }
 }

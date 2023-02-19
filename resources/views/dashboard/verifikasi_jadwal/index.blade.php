@@ -92,49 +92,49 @@
                                             <tr>
                                                 <td class="align-middle">
                                                     <h6 class="mb-0 text-sm ps-3">
-                                                        {{ $row->kode_mk }}
+                                                        {{ $row->jadwal->mataKuliah->kode_mk }}
                                                     </h6>
                                                 </td>
                                                 <td class="align-middle">
                                                     <p class="text-xs font-weight-bold mb-0">
-                                                        {{ $row->nama_mk }}
+                                                        {{ $row->jadwal->mataKuliah->nama_mk }}
                                                     </p>
                                                 </td>
                                                 <td class="align-middle">
                                                     <p class="text-xs font-weight-bold mb-0">
-                                                        {{ $row->dosen }}
+                                                        {{ $row->jadwal->mataKuliah->dosen->nama_dosen }}
                                                     </p>
                                                 </td>
                                                 <td class="align-middle">
                                                     <p class="text-xs font-weight-bold mb-0">
-                                                        {{ $row->sks }}
+                                                        {{ $row->jadwal->mataKuliah->sks }}
                                                     </p>
                                                 </td>
                                                 <td class="align-middle">
                                                     <p class="text-xs font-weight-bold mb-0">
-                                                        {{ $row->t_p }}
+                                                        {{ $row->jadwal->mataKuliah->t_p }}
                                                     </p>
                                                 </td>
                                                 <td class="align-middle">
                                                     <p class="text-xs font-weight-bold mb-0">
-                                                        {{ $row->kelas }}
+                                                        {{ $row->jadwal->kelas }}
                                                     </p>
                                                 </td>
                                                 <td class="align-middle">
                                                     <p class="text-xs font-weight-bold mb-0">
-                                                        {{ $row->hari }}
+                                                        {{ $row->jadwal->hari }}
                                                     </p>
                                                 </td>
                                                 <td class="align-middle">
                                                     <p class="text-xs font-weight-bold mb-0">
-                                                        {{ $row->jam_mulai }}
+                                                        {{ $row->jadwal->jam_mulai }}
                                                         -
-                                                        {{ $row->jam_selesai }}
+                                                        {{ $row->jadwal->jam_selesai }}
                                                     </p>
                                                 </td>
                                                 <td class="align-middle">
                                                     <p class="text-xs font-weight-bold mb-0">
-                                                        {{ $row->no_ruangan }}
+                                                        {{ $row->jadwal->ruangan->no_ruangan }}
                                                     </p>
                                                 </td>
                                                 <td

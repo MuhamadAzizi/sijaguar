@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Penggunaan;
 use App\Models\VerifikasiJadwal;
+use App\Models\Jadwal;
 
 class ViewModeController extends Controller
 {
@@ -31,78 +32,42 @@ class ViewModeController extends Controller
 
         if ($sekarang >= $sesi_pertama['jam_masuk'] && $sekarang <= $sesi_pertama['jam_keluar']) {
             $data['sesi'] = 'Sesi 1' . ' (' . $sesi_pertama['jam_masuk'] . ' - ' . $sesi_pertama['jam_keluar'] . ')';
-            $data['verifikasi_jadwal'] = VerifikasiJadwal::join('jadwal', 'verifikasi_jadwal.jadwal_id', '=', 'jadwal.id')
-                ->join('mata_kuliah', 'jadwal.mata_kuliah_id', '=', 'mata_kuliah.id')
-                ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
-                ->leftJoin('dosen', function ($join) {
-                    $join->on('mata_kuliah.dosen_id', 'dosen.id')
-                        ->whereNotNull('mata_kuliah.dosen_id');
-                })
-                ->select('verifikasi_jadwal.*', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'dosen.nama_dosen as dosen', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'jadwal.kelas', 'jadwal.hari', 'jadwal.jam_mulai', 'jadwal.jam_selesai', 'ruangan.no_ruangan')
-                ->where('verifikasi_jadwal.created_at', 'like', date('Y-m-d') . '%')
-                ->where('jadwal.jam_mulai', '>=', $sesi_pertama['jam_masuk'])
-                ->where('jadwal.jam_mulai', '<=', $sesi_pertama['jam_keluar'])
-                ->orderBy('jadwal.jam_mulai', 'asc')
-                ->get();
-            $data['penggunaan'] = Penggunaan::join('ruangan', 'penggunaan.ruangan_id', '=', 'ruangan.id')
-                ->join('users', 'penggunaan.user_id', '=', 'users.id')
-                ->join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
-                ->select('penggunaan.*', 'ruangan.no_ruangan', 'jenis_ruangan.nama_jenis_ruangan', 'users.username')
-                ->where('penggunaan.status', 'Diterima')
+            $data['verifikasi_jadwal'] = VerifikasiJadwal::whereHas('jadwal', function ($query) use ($sesi_pertama) {
+                $query->where('jadwal.jam_mulai', '>=', $sesi_pertama['jam_masuk'])
+                    ->where('jadwal.jam_mulai', '<=', $sesi_pertama['jam_keluar'])
+                    ->orderBy('jadwal.jam_mulai', 'asc');
+            })->where('verifikasi_jadwal.created_at', 'like', date('Y-m-d') . '%')->get();
+            $data['penggunaan'] = Penggunaan::where('status', 'Diterima')
                 ->where('tanggal_penggunaan', date('Y-m-d'))
-                ->where('penggunaan.jam_masuk', '>=', $sesi_pertama['jam_masuk'])
-                ->where('penggunaan.jam_masuk', '<=', $sesi_pertama['jam_keluar'])
-                ->orderBy('penggunaan.jam_masuk', 'asc')
+                ->where('jam_masuk', '>=', $sesi_pertama['jam_masuk'])
+                ->where('jam_masuk', '<=', $sesi_pertama['jam_keluar'])
+                ->orderBy('jam_masuk', 'asc')
                 ->get();
         } elseif ($sekarang >= $sesi_kedua['jam_masuk'] && $sekarang <= $sesi_kedua['jam_keluar']) {
             $data['sesi'] = 'Sesi 2' . ' (' . $sesi_kedua['jam_masuk'] . ' - ' . $sesi_kedua['jam_keluar'] . ')';
-            $data['verifikasi_jadwal'] = VerifikasiJadwal::join('jadwal', 'verifikasi_jadwal.jadwal_id', '=', 'jadwal.id')
-                ->join('mata_kuliah', 'jadwal.mata_kuliah_id', '=', 'mata_kuliah.id')
-                ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
-                ->leftJoin('dosen', function ($join) {
-                    $join->on('mata_kuliah.dosen_id', 'dosen.id')
-                        ->whereNotNull('mata_kuliah.dosen_id');
-                })
-                ->select('verifikasi_jadwal.*', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'dosen.nama_dosen as dosen', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'jadwal.kelas', 'jadwal.hari', 'jadwal.jam_mulai', 'jadwal.jam_selesai', 'ruangan.no_ruangan')
-                ->where('verifikasi_jadwal.created_at', 'like', date('Y-m-d') . '%')
-                ->where('jadwal.jam_mulai', '>=', $sesi_kedua['jam_masuk'])
-                ->where('jadwal.jam_mulai', '<=', $sesi_kedua['jam_keluar'])
-                ->orderBy('jadwal.jam_mulai', 'asc')
-                ->get();
-            $data['penggunaan'] = Penggunaan::join('ruangan', 'penggunaan.ruangan_id', '=', 'ruangan.id')
-                ->join('users', 'penggunaan.user_id', '=', 'users.id')
-                ->join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
-                ->select('penggunaan.*', 'ruangan.no_ruangan', 'jenis_ruangan.nama_jenis_ruangan', 'users.username')
-                ->where('penggunaan.status', 'Diterima')
+            $data['verifikasi_jadwal'] = VerifikasiJadwal::whereHas('jadwal', function ($query) use ($sesi_kedua) {
+                $query->where('jadwal.jam_mulai', '>=', $sesi_kedua['jam_masuk'])
+                    ->where('jadwal.jam_mulai', '<=', $sesi_kedua['jam_keluar'])
+                    ->orderBy('jadwal.jam_mulai', 'asc');
+            })->where('verifikasi_jadwal.created_at', 'like', date('Y-m-d') . '%')->get();
+            $data['penggunaan'] = Penggunaan::where('status', 'Diterima')
                 ->where('tanggal_penggunaan', date('Y-m-d'))
-                ->where('penggunaan.jam_masuk', '>=', $sesi_kedua['jam_masuk'])
-                ->where('penggunaan.jam_masuk', '<=', $sesi_kedua['jam_keluar'])
-                ->orderBy('penggunaan.jam_masuk', 'asc')
+                ->where('jam_masuk', '>=', $sesi_kedua['jam_masuk'])
+                ->where('jam_masuk', '<=', $sesi_kedua['jam_keluar'])
+                ->orderBy('jam_masuk', 'asc')
                 ->get();
         } elseif ($sekarang >= $sesi_ketiga['jam_masuk'] && $sekarang <= $sesi_ketiga['jam_keluar']) {
             $data['sesi'] = 'Sesi 3' . ' (' . $sesi_ketiga['jam_masuk'] . ' - ' . $sesi_ketiga['jam_keluar'] . ')';
-            $data['verifikasi_jadwal'] = VerifikasiJadwal::join('jadwal', 'verifikasi_jadwal.jadwal_id', '=', 'jadwal.id')
-                ->join('mata_kuliah', 'jadwal.mata_kuliah_id', '=', 'mata_kuliah.id')
-                ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
-                ->leftJoin('dosen', function ($join) {
-                    $join->on('mata_kuliah.dosen_id', 'dosen.id')
-                        ->whereNotNul('mata_kuliah.dosen_id');
-                })
-                ->select('verifikasi_jadwal.*', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'dosen.nama_dosen as dosen', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'jadwal.kelas', 'jadwal.hari', 'jadwal.jam_mulai', 'jadwal.jam_selesai', 'ruangan.no_ruangan')
-                ->where('verifikasi_jadwal.created_at', 'like', date('Y-m-d') . '%')
-                ->where('jadwal.jam_mulai', '>=', $sesi_ketiga['jam_masuk'])
-                ->where('jadwal.jam_mulai', '<=', $sesi_ketiga['jam_keluar'])
-                ->orderBy('jadwal.jam_mulai', 'asc')
-                ->get();
-            $data['penggunaan'] = Penggunaan::join('ruangan', 'penggunaan.ruangan_id', '=', 'ruangan.id')
-                ->join('users', 'penggunaan.user_id', '=', 'users.id')
-                ->join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
-                ->select('penggunaan.*', 'ruangan.no_ruangan', 'jenis_ruangan.nama_jenis_ruangan', 'users.username')
-                ->where('penggunaan.status', 'Diterima')
+            $data['verifikasi_jadwal'] = VerifikasiJadwal::whereHas('jadwal', function ($query) use ($sesi_ketiga) {
+                $query->where('jadwal.jam_mulai', '>=', $sesi_ketiga['jam_masuk'])
+                    ->where('jadwal.jam_mulai', '<=', $sesi_ketiga['jam_keluar'])
+                    ->orderBy('jadwal.jam_mulai', 'asc');
+            })->where('verifikasi_jadwal.created_at', 'like', date('Y-m-d') . '%')->get();
+            $data['penggunaan'] = Penggunaan::where('status', 'Diterima')
                 ->where('tanggal_penggunaan', date('Y-m-d'))
-                ->where('penggunaan.jam_masuk', '>=', $sesi_ketiga['jam_masuk'])
-                ->where('penggunaan.jam_masuk', '<=', $sesi_ketiga['jam_keluar'])
-                ->orderBy('penggunaan.jam_masuk', 'asc')
+                ->where('jam_masuk', '>=', $sesi_ketiga['jam_masuk'])
+                ->where('jam_masuk', '<=', $sesi_ketiga['jam_keluar'])
+                ->orderBy('jam_masuk', 'asc')
                 ->get();
         } else {
             $data['sesi'] = '';

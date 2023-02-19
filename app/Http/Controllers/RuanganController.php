@@ -17,13 +17,11 @@ class RuanganController extends Controller
     {
         $data = [
             'title' => 'Ruangan',
-            'ruangan' => Ruangan::join('jenis_ruangan', 'ruangan.jenis_ruangan_id', '=', 'jenis_ruangan.id')
-                ->select('ruangan.*', 'jenis_ruangan.nama_jenis_ruangan')
-                ->get(),
+            'ruangan' => Ruangan::all(),
             'jenis_ruangan' => JenisRuangan::all()
         ];
 
-        return view('dashboard/ruangan/index', $data);
+        return view('dashboard.ruangan.index', $data);
     }
 
     /**
@@ -38,7 +36,7 @@ class RuanganController extends Controller
             'jenis_ruangan' => JenisRuangan::all()
         ];
 
-        return view('dashboard/ruangan/create', $data);
+        return view('dashboard.ruangan.create', $data);
     }
 
     /**
@@ -85,11 +83,11 @@ class RuanganController extends Controller
     {
         $data = [
             'title' => 'Edit Ruangan',
-            'ruangan' => Ruangan::find($id),
+            'ruangan' => Ruangan::findOrFail($id),
             'jenis_ruangan' => JenisRuangan::all()
         ];
 
-        return view('dashboard/ruangan/edit', $data);
+        return view('dashboard.ruangan.edit', $data);
     }
 
     /**
@@ -111,7 +109,7 @@ class RuanganController extends Controller
             'jenis_ruangan_id' => 'required'
         ], $messages);
 
-        Ruangan::find($id)->update($request->all());
+        Ruangan::findOrFail($id)->update($request->all());
 
         return redirect()->route('ruangan.index')->with('success', 'Ruangan berhasil diubah');
     }

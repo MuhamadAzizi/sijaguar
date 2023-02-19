@@ -34,7 +34,7 @@
                                 @foreach ($ruangan as $row)
                                 <option value="{{ $row->id }}">
                                     {{ $row->no_ruangan }} -
-                                    {{ $row->nama_jenis_ruangan }}
+                                    {{ $row->jenisRuangan->nama_jenis_ruangan }}
                                 </option>
                                 @endforeach
                             </select>

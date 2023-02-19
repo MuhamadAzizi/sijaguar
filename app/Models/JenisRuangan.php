@@ -13,4 +13,10 @@ class JenisRuangan extends Model
     protected $fillable = [
         'nama_jenis_ruangan'
     ];
+
+    // One to one relationship
+    public function ruangan()
+    {
+        return $this->hasOne(Ruangan::class);
+    }
 }
