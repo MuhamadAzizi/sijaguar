@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Penggunaan;
 use App\Models\Ruangan;
+use Illuminate\Support\Facades\Gate;
 
 class PenggunaanController extends Controller
 {
@@ -27,9 +28,9 @@ class PenggunaanController extends Controller
             ->update(['status' => 'Selesai']);
 
         // Pengaturan kondisi level untuk menampilkan data penggunaan
-        if (Auth::user()->level == 'Admin') {
+        if (Gate::allows('isAdmin')) {
             $data['penggunaan'] = Penggunaan::all();
-        } elseif (Auth::user()->level == 'User') {
+        } elseif (Gate::allows('isUser')) {
             $data['penggunaan'] = Penggunaan::where('user_id', Auth::user()->id)->get();
         }
 
@@ -43,12 +44,16 @@ class PenggunaanController extends Controller
      */
     public function create()
     {
-        $data = [
-            'title' => 'Tambah Penggunaan',
-            'ruangan' => Ruangan::all()
-        ];
+        if (Gate::allows('isUser')) {
+            $data = [
+                'title' => 'Tambah Penggunaan',
+                'ruangan' => Ruangan::all()
+            ];
 
-        return view('dashboard.penggunaan.create', $data);
+            return view('dashboard.penggunaan.create', $data);
+        } else {
+            abort(403);
+        }
     }
 
     /**
@@ -59,32 +64,36 @@ class PenggunaanController extends Controller
      */
     public function store(Request $request)
     {
-        $messages = [
-            'ruangan_id.required' => 'Ruangan harus diisi',
-            'tanggal_penggunaan.required' => 'Tanggal Penggunaan harus diisi',
-            'jam_masuk.required' => 'Jam Mulai harus diisi',
-            'jam_keluar.required' => 'Jam Selesai harus diisi',
-            'keterangan.required' => 'Keterangan harus diisi'
-        ];
+        if (Gate::allows('isUser')) {
+            $messages = [
+                'ruangan_id.required' => 'Ruangan harus diisi',
+                'tanggal_penggunaan.required' => 'Tanggal Penggunaan harus diisi',
+                'jam_masuk.required' => 'Jam Mulai harus diisi',
+                'jam_keluar.required' => 'Jam Selesai harus diisi',
+                'keterangan.required' => 'Keterangan harus diisi'
+            ];
 
-        $request->validate([
-            'ruangan_id' => 'required',
-            'tanggal_penggunaan' => 'required',
-            'jam_masuk' => 'required',
-            'jam_keluar' => 'required',
-            'keterangan' => 'required'
-        ], $messages);
+            $request->validate([
+                'ruangan_id' => 'required',
+                'tanggal_penggunaan' => 'required',
+                'jam_masuk' => 'required',
+                'jam_keluar' => 'required',
+                'keterangan' => 'required'
+            ], $messages);
 
-        Penggunaan::create([
-            'user_id' => Auth::user()->id,
-            'ruangan_id' => $request->ruangan_id,
-            'tanggal_penggunaan' => $request->tanggal_penggunaan,
-            'jam_masuk' => $request->jam_masuk,
-            'jam_keluar' => $request->jam_keluar,
-            'keterangan' => $request->keterangan
-        ]);
+            Penggunaan::create([
+                'user_id' => Auth::user()->id,
+                'ruangan_id' => $request->ruangan_id,
+                'tanggal_penggunaan' => $request->tanggal_penggunaan,
+                'jam_masuk' => $request->jam_masuk,
+                'jam_keluar' => $request->jam_keluar,
+                'keterangan' => $request->keterangan
+            ]);
 
-        return redirect()->route('penggunaan.index')->with('success', 'Berhasil mengajukan penggunaan ruangan');
+            return redirect()->route('penggunaan.index')->with('success', 'Berhasil mengajukan penggunaan ruangan');
+        } else {
+            abort(403);
+        }
     }
 
     /**
@@ -106,13 +115,17 @@ class PenggunaanController extends Controller
      */
     public function edit($id)
     {
-        $data = [
-            'title' => 'Edit Penggunaan',
-            'ruangan' => Ruangan::all(),
-            'penggunaan' => Penggunaan::find($id)
-        ];
+        if (Gate::allows('isUser')) {
+            $data = [
+                'title' => 'Edit Penggunaan',
+                'ruangan' => Ruangan::all(),
+                'penggunaan' => Penggunaan::find($id)
+            ];
 
-        return view('dashboard.penggunaan.edit', $data);
+            return view('dashboard.penggunaan.edit', $data);
+        } else {
+            abort(403);
+        }
     }
 
     /**
@@ -124,13 +137,13 @@ class PenggunaanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($request->status) {
+        if (Gate::allows('isAdmin')) {
             Penggunaan::find($id)->update([
                 'status' => $request->status
             ]);
 
             $msg = 'Berhasil ' . $request->status . ' penggunaan ruangan';
-        } else {
+        } elseif (Gate::allows('isUser')) {
             $messages = [
                 'ruangan_id.required' => 'Ruangan harus diisi',
                 'tanggal_penggunaan.required' => 'Tanggal Penggunaan harus diisi',
@@ -169,8 +182,12 @@ class PenggunaanController extends Controller
      */
     public function destroy($id)
     {
-        Penggunaan::destroy($id);
+        if (Gate::allows('isUser')) {
+            Penggunaan::destroy($id);
 
-        return redirect()->route('penggunaan.index')->with('success', 'Berhasil menghapus pengajuan penggunaan ruangan');
+            return redirect()->route('penggunaan.index')->with('success', 'Berhasil menghapus pengajuan penggunaan ruangan');
+        } else {
+            abort(403);
+        }
     }
 }

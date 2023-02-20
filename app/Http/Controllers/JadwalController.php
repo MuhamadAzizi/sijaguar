@@ -10,6 +10,7 @@ use App\Models\TahunAkademik;
 use App\Models\Ruangan;
 use App\Models\MataKuliah;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class JadwalController extends Controller
 {
@@ -26,9 +27,9 @@ class JadwalController extends Controller
         ];
 
         // Pengaturan kondisi level untuk menampilkan data jadwal
-        if (Auth::user()->level == 'Admin') {
+        if (Gate::allows('isAdmin')) {
             $data['jadwal'] = Jadwal::whereBelongsTo($data['tahun_akademik'])->get();
-        } elseif (Auth::user()->level == 'User') {
+        } elseif (Gate::allows('isUser')) {
             $data['jadwal'] = User::find(Auth::user()->id)->jadwal()->whereBelongsTo($data['tahun_akademik'])->get();
         }
 
@@ -63,7 +64,7 @@ class JadwalController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::user()->level == 'Admin') {
+        if (Gate::allows('isAdmin')) {
             $messages = [
                 'kelas.required' => 'Kelas wajib diisi',
             ];
@@ -73,7 +74,7 @@ class JadwalController extends Controller
             ], $messages);
 
             Jadwal::create($request->all());
-        } elseif (Auth::user()->level == 'User') {
+        } elseif (Gate::allows('isUser')) {
             JadwalUser::create([
                 'jadwal_id' => $request->jadwal_id,
                 'user_id' => Auth::user()->id
@@ -143,9 +144,9 @@ class JadwalController extends Controller
      */
     public function destroy($id)
     {
-        if (Auth::user()->level == 'Admin') {
+        if (Gate::allows('isAdmin')) {
             Jadwal::destroy($id);
-        } elseif (Auth::user()->level == 'User') {
+        } elseif (Gate::allows('isUser')) {
             JadwalUser::where('id', $id)->where('user_id', Auth::user()->id)->delete();
         }
 
