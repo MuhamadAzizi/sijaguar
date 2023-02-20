@@ -4,28 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 class RegisterController extends Controller
 {
     public function index()
     {
-        // Check if logged in
-        if (Auth::check()) {
-            return redirect()->route('index');
-        }
-
         return view('register');
     }
 
     public function store(Request $request)
     {
-        // Check if logged in
-        if (Auth::check()) {
-            return redirect()->route('index');
-        }
-
         $messages = [
             'required' => 'Kolom :attribute harus diisi.',
             'unique' => 'Username sudah digunakan.',
