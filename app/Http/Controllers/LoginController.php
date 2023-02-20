@@ -11,6 +11,7 @@ class LoginController extends Controller
 {
     public function index()
     {
+        // Check if logged in
         if (Auth::check()) {
             return redirect()->route('index');
         }
@@ -20,6 +21,11 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        // Check if logged in
+        if (Auth::check()) {
+            return redirect()->route('index');
+        }
+
         $messages = [
             'required' => 'Kolom :attribute harus diisi.'
         ];
@@ -48,6 +54,10 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        if (!Auth::check()) {
+            abort(403);
+        }
+
         Auth::logout();
 
         $request->session()->invalidate();
