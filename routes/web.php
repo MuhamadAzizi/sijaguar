@@ -28,25 +28,20 @@ use App\Http\Controllers\ViewModeController;
 |
 */
 
-// Route for guest
+Route::get('/', [DashboardController::class, 'index'])->name('index')->middleware('auth');
 Route::get('login', [LoginController::class, 'index'])->name('login.index');
 Route::post('login', [LoginController::class, 'login'])->name('login.login');
+Route::get('logout', [LoginController::class, 'logout'])->name('login.logout');
 Route::get('view', [ViewModeController::class, 'index'])->name('view.index');
-Route::get('register', [RegisterController::class, 'index'])->name('register.index');
-Route::post('register', [RegisterController::class, 'store'])->name('register.store');
-
-// Route for all auth
-Route::get('logout', [LoginController::class, 'logout'])->name('login.logout')->middleware('auth');
-Route::get('/', [DashboardController::class, 'index'])->name('index')->middleware('auth');
 Route::resource('penggunaan', PenggunaanController::class)->except(['show'])->middleware('auth');
 Route::resource('ruangan', RuanganController::class)->except(['show'])->middleware('auth');
+Route::resource('jenis-ruangan', JenisRuanganController::class)->except(['index', 'show'])->middleware('auth');
 Route::resource('mata-kuliah', MataKuliahController::class)->except(['show'])->middleware('auth');
+Route::post('tahun-akademik', [TahunAkademikController::class, 'store'])->name('tahun-akademik.store')->middleware('auth');
 Route::resource('jadwal', JadwalController::class)->except(['show'])->middleware('auth');
+Route::resource('verifikasi-jadwal', VerifikasiJadwalController::class)->only(['index', 'store', 'update'])->middleware('auth');
+Route::resource('dosen', DosenController::class)->except(['show'])->middleware('auth');
+Route::resource('user', UserController::class)->middleware('auth');
 Route::resource('profil', ProfilController::class)->only(['index', 'edit', 'update'])->middleware('auth');
-
-// Route for admin
-Route::resource('jenis-ruangan', JenisRuanganController::class)->except(['index', 'show'])->middleware('can:isAdmin');
-Route::post('tahun-akademik', [TahunAkademikController::class, 'store'])->name('tahun-akademik.store')->middleware('can:isAdmin');
-Route::resource('verifikasi-jadwal', VerifikasiJadwalController::class)->only(['index', 'store', 'update'])->middleware('can:isAdmin');
-Route::resource('dosen', DosenController::class)->except(['show'])->middleware('can:isAdmin');
-Route::resource('user', UserController::class)->middleware('can:isAdmin');
+Route::get('register', [RegisterController::class, 'index'])->name('register.index');
+Route::post('register', [RegisterController::class, 'store'])->name('register.store');

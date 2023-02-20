@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Ruangan;
 use App\Models\JenisRuangan;
-use Illuminate\Support\Facades\Gate;
 
 class RuanganController extends Controller
 {
@@ -32,16 +31,12 @@ class RuanganController extends Controller
      */
     public function create()
     {
-        if (Gate::allows('isAdmin')) {
-            $data = [
-                'title' => 'Tambah Ruangan',
-                'jenis_ruangan' => JenisRuangan::all()
-            ];
+        $data = [
+            'title' => 'Tambah Ruangan',
+            'jenis_ruangan' => JenisRuangan::all()
+        ];
 
-            return view('dashboard.ruangan.create', $data);
-        } else {
-            abort(403);
-        }
+        return view('dashboard.ruangan.create', $data);
     }
 
     /**
@@ -52,23 +47,19 @@ class RuanganController extends Controller
      */
     public function store(Request $request)
     {
-        if (Gate::allows('isAdmin')) {
-            $messages = [
-                'no_ruangan.required' => 'No Ruangan harus diisi',
-                'jenis_ruangan_id.required' => 'Jenis Ruangan harus diisi'
-            ];
+        $messages = [
+            'no_ruangan.required' => 'No Ruangan harus diisi',
+            'jenis_ruangan_id.required' => 'Jenis Ruangan harus diisi'
+        ];
 
-            $request->validate([
-                'no_ruangan' => 'required',
-                'jenis_ruangan_id' => 'required'
-            ], $messages);
+        $request->validate([
+            'no_ruangan' => 'required',
+            'jenis_ruangan_id' => 'required'
+        ], $messages);
 
-            Ruangan::create($request->all());
+        Ruangan::create($request->all());
 
-            return redirect()->route('ruangan.index')->with('success', 'Ruangan berhasil ditambahkan');
-        } else {
-            abort(403);
-        }
+        return redirect()->route('ruangan.index')->with('success', 'Ruangan berhasil ditambahkan');
     }
 
     /**
@@ -90,17 +81,13 @@ class RuanganController extends Controller
      */
     public function edit($id)
     {
-        if (Gate::allows('isAdmin')) {
-            $data = [
-                'title' => 'Edit Ruangan',
-                'ruangan' => Ruangan::findOrFail($id),
-                'jenis_ruangan' => JenisRuangan::all()
-            ];
+        $data = [
+            'title' => 'Edit Ruangan',
+            'ruangan' => Ruangan::findOrFail($id),
+            'jenis_ruangan' => JenisRuangan::all()
+        ];
 
-            return view('dashboard.ruangan.edit', $data);
-        } else {
-            abort(403);
-        }
+        return view('dashboard.ruangan.edit', $data);
     }
 
     /**
@@ -112,23 +99,19 @@ class RuanganController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Gate::allows('isAdmin')) {
-            $messages = [
-                'no_ruangan.required' => 'No Ruangan harus diisi',
-                'jenis_ruangan_id.required' => 'Jenis Ruangan harus diisi'
-            ];
+        $messages = [
+            'no_ruangan.required' => 'No Ruangan harus diisi',
+            'jenis_ruangan_id.required' => 'Jenis Ruangan harus diisi'
+        ];
 
-            $request->validate([
-                'no_ruangan' => 'required',
-                'jenis_ruangan_id' => 'required'
-            ], $messages);
+        $request->validate([
+            'no_ruangan' => 'required',
+            'jenis_ruangan_id' => 'required'
+        ], $messages);
 
-            Ruangan::findOrFail($id)->update($request->all());
+        Ruangan::findOrFail($id)->update($request->all());
 
-            return redirect()->route('ruangan.index')->with('success', 'Ruangan berhasil diubah');
-        } else {
-            abort(403);
-        }
+        return redirect()->route('ruangan.index')->with('success', 'Ruangan berhasil diubah');
     }
 
     /**
@@ -139,12 +122,8 @@ class RuanganController extends Controller
      */
     public function destroy($id)
     {
-        if (Gate::allows('isAdmin')) {
-            Ruangan::destroy($id);
+        Ruangan::destroy($id);
 
-            return redirect()->route('ruangan.index')->with('success', 'Ruangan berhasil dihapus');
-        } else {
-            abort(403);
-        }
+        return redirect()->route('ruangan.index')->with('success', 'Ruangan berhasil dihapus');
     }
 }
