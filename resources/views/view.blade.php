@@ -188,7 +188,8 @@
                                     <tr>
                                         <td class="align-middle">
                                             <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->ruangan->jenisRuangan->nama_jenis_ruangan }}
+                                                {{ $row->ruangan->no_ruangan }} - {{
+                                                $row->ruangan->jenisRuangan->nama_jenis_ruangan }}
                                             </p>
                                         </td>
                                         <td class="align-middle">
