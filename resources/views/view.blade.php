@@ -50,20 +50,16 @@
             data-scroll="true">
             <div class="container-fluid py-1 px-3">
                 <nav aria-label="breadcrumb" class="d-flex align-items-center">
-                    <h6 class="font-weight-bolder mb-0">
+                    <h5 class="font-weight-bolder mb-0">
                         {{ $title }} {{ $sesi }}
-                    </h6>
-
-                    @if (!Auth::check())
-                    <a href="{{ route('login.index') }}" class="btn btn-info btn-sm ms-3 m-0">Login</a>
-                    @endif
+                    </h5>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <ul class="navbar-nav ms-auto justify-content-end">
                         <li class="nav-item px-3 d-flex align-items-center">
                             <div class="d-flex flex-column align-items-end">
-                                <span id="current_date" class="text-sm"></span>
-                                <span id="clock" class="text-sm fw-bold"></span>
+                                <span id="current_date" class="text-md"></span>
+                                <span id="clock" class="text-md fw-bold"></span>
                             </div>
                         </li>
                         <li class="nav-item ps-3 d-xl-none d-flex align-items-center">
@@ -88,7 +84,7 @@
                         <div class="card-header p-3">
                             <div class="row">
                                 <div class="col-12 d-flex align-items-center justify-content-between">
-                                    <h6 class="mb-0">Perkuliahan Hari Ini</h6>
+                                    <h5 class="mb-0">Jadwal Perkuliahan</h6>
                                 </div>
                             </div>
                         </div>
@@ -167,11 +163,11 @@
                         <div class="card-header p-3">
                             <div class="row">
                                 <div class="col-12 d-flex align-items-center justify-content-between">
-                                    <h6 class="mb-0">Jadwal Penggunaan Ruangan Hari Ini</h6>
+                                    <h5 class="mb-0">Penggunaan Ruangan Tambahan</h5>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body p-3 border-top">
+                        <div class="card-body p-3 border-top overflow-auto">
                             <table class="table table-responsive w-100 mb-0">
                                 <thead>
                                     <tr>
@@ -180,7 +176,7 @@
                                         <th class="text-dark text-uppercase text-dark text-xs font-weight-bolder ps-2">
                                             Waktu</th>
                                         <th class="text-dark text-uppercase text-dark text-xs font-weight-bolder ps-2">
-                                            Status</th>
+                                            Keterangan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -188,8 +184,7 @@
                                     <tr>
                                         <td class="align-middle">
                                             <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->ruangan->no_ruangan }} - {{
-                                                $row->ruangan->jenisRuangan->nama_jenis_ruangan }}
+                                                {{ $row->ruangan->no_ruangan }}
                                             </p>
                                         </td>
                                         <td class="align-middle">
@@ -197,10 +192,9 @@
                                                 {{ $row->jam_masuk }} - {{ $row->jam_keluar }}
                                             </p>
                                         </td>
-                                        <td
-                                            class="align-middle {{ ($row->status == 'Diterima') ? 'bg-success text-white' : (($row->status == 'Ditolak') ? 'bg-danger text-white' : (($row->status == 'Menunggu') ? 'bg-warning text-white' : (($row->status == 'Selesai') ? 'bg-secondary text-white' : ''))) }}">
+                                        <td class="align-middle">
                                             <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->status }}
+                                                {{ $row->keterangan }}
                                             </p>
                                         </td>
                                     </tr>
