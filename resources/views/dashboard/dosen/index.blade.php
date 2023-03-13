@@ -24,12 +24,12 @@
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3">Tabel User</h6>
+                        <h6 class="text-white text-capitalize ps-3">Tabel Dosen</h6>
                     </div>
                 </div>
                 <div class="card-body">
                     <div>
-                        <table class="table datatable table-responsive w-100 mb-0">
+                        <table id="tabel-dosen" class="table table-responsive w-100 mb-0">
                             <thead>
                                 <tr>
                                     <th
@@ -97,4 +97,14 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('datatable-script')
+<script>
+    $(document).ready(function() {
+        $('#tabel-dosen').DataTable({
+            responsive: true
+        });
+    });
+</script>
 @endsection

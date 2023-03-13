@@ -249,14 +249,10 @@
             }
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
-
-        $(document).ready(function() {
-            $('.datatable').DataTable({
-                responsive: true
-            });
-        });
     </script>
     <!--Modal JS Script -->
+
+    @yield('datatable-script')
 
     <script>
         var current_date = document.getElementById('current_date')

@@ -39,6 +39,16 @@
 
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/v/ju/jq-3.6.0/dt-1.13.1/r-2.4.0/datatables.min.css" />
+
+    <style>
+        table.dataTable.no-footer {
+            border-bottom: 0 !important;
+        }
+
+        .table> :not(caption)>*>* {
+            border: 0 !important;
+        }
+    </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -97,39 +107,29 @@
                             </div>
                         </div>
                         <div class="card-body p-3 border-top">
-                            <table class="table table-responsive w-100 align-items-center mb-0">
+                            <table id="tabel-jadwal" class="table table-responsive w-100 align-items-center mb-0">
                                 <thead>
                                     <tr>
+                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
+                                            Ruang</th>
+                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
+                                            Waktu</th>
+                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
+                                            Kelas</th>
                                         <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
                                             Nama Mata Kuliah</th>
                                         <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
                                             Dosen</th>
                                         <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
-                                            Kelas</th>
-                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
-                                            Waktu</th>
-                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
-                                            Ruang</th>
-                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
                                             Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($verifikasi_jadwal as $row)
-                                    <tr>
+                                    @foreach ($verifikasi_jadwal as $row)
+                                    <tr class="border-0">
                                         <td class="align-middle">
                                             <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->jadwal->mataKuliah->nama_mk }}
-                                            </p>
-                                        </td>
-                                        <td class="align-middle">
-                                            <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->jadwal->mataKuliah->dosen->nama_dosen }}
-                                            </p>
-                                        </td>
-                                        <td class="align-middle">
-                                            <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->jadwal->kelas }}
+                                                {{ $row->jadwal->ruangan->no_ruangan }}
                                             </p>
                                         </td>
                                         <td class="align-middle">
@@ -141,7 +141,17 @@
                                         </td>
                                         <td class="align-middle">
                                             <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->jadwal->ruangan->no_ruangan }}
+                                                {{ $row->jadwal->kelas }}
+                                            </p>
+                                        </td>
+                                        <td class="align-middle">
+                                            <p class="text-sm font-weight-bold mb-0">
+                                                {{ $row->jadwal->mataKuliah->nama_mk }}
+                                            </p>
+                                        </td>
+                                        <td class="align-middle">
+                                            <p class="text-sm font-weight-bold mb-0">
+                                                {{ $row->jadwal->mataKuliah->dosen->nama_dosen }}
                                             </p>
                                         </td>
                                         <td
@@ -151,15 +161,7 @@
                                             </p>
                                         </td>
                                     </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="6" class="text-center">
-                                            <p class="text-sm font-weight-bold mb-0">
-                                                Tidak ada data
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    @endforelse
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -176,7 +178,7 @@
                             </div>
                         </div>
                         <div class="card-body p-3 border-top overflow-auto">
-                            <table class="table table-responsive w-100 mb-0">
+                            <table id="tabel-ruangan-tambahan" class="table table-responsive w-100 mb-0">
                                 <thead>
                                     <tr>
                                         <th class="text-dark text-uppercase text-dark text-xs font-weight-bolder ps-2">
@@ -188,7 +190,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($penggunaan as $row)
+                                    @foreach ($penggunaan as $row)
                                     <tr>
                                         <td class="align-middle">
                                             <p class="text-sm font-weight-bold mb-0">
@@ -206,15 +208,7 @@
                                             </p>
                                         </td>
                                     </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="3" class="text-center">
-                                            <p class="text-sm font-weight-bold mb-0">
-                                                Tidak ada data
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    @endforelse
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -254,9 +248,22 @@
         }
 
         $(document).ready(function() {
-            $('.datatable').DataTable({
-                responsive: true,
-                order: [],
+            $('#tabel-jadwal').DataTable({
+                bFilter: false,
+                bInfo: false,
+                paging: false,
+                order: [
+                    [1, 'asc']
+                ]
+            });
+
+            $('#tabel-ruangan-tambahan').DataTable({
+                bFilter: false,
+                bInfo: false,
+                paging: false,
+                order: [
+                    [1, 'asc']
+                ]
             });
         });
     </script>
