@@ -86,7 +86,7 @@ class ViewModeController extends Controller
                 ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
                 ->leftJoin('dosen', function ($join) {
                     $join->on('mata_kuliah.dosen_id', 'dosen.id')
-                        ->whereNotNul('mata_kuliah.dosen_id');
+                        ->whereNotNull('mata_kuliah.dosen_id');
                 })
                 ->select('verifikasi_jadwal.*', 'mata_kuliah.kode_mk', 'mata_kuliah.nama_mk', 'dosen.nama_dosen as dosen', 'mata_kuliah.sks', 'mata_kuliah.t_p', 'jadwal.kelas', 'jadwal.hari', 'jadwal.jam_mulai', 'jadwal.jam_selesai', 'ruangan.no_ruangan')
                 ->where('verifikasi_jadwal.created_at', 'like', date('Y-m-d') . '%')
