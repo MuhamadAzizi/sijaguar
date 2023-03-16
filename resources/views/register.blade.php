@@ -133,7 +133,7 @@
                     <div class="row align-items-center justify-content-center">
                         <div class="col-12 col-md-6 my-auto">
                             <div class="copyright text-center text-sm text-white">
-                                © Sistem Informasi Jadwal Penggunaan Ruangan 2022
+                                © Sistem Informasi Jadwal Penggunaan Ruangan 2023
                             </div>
                         </div>
                     </div>

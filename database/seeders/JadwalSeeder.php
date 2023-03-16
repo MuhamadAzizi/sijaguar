@@ -19,6 +19,7 @@ class JadwalSeeder extends Seeder
             [
                 'ruangan_id' => 5,
                 'mata_kuliah_id' => 1,
+                'dosen_id' => 1,
                 'kelas' => 'A2',
                 'hari' => 'Senin',
                 'jam_mulai' => '08:00:00',
@@ -28,6 +29,7 @@ class JadwalSeeder extends Seeder
             [
                 'ruangan_id' => 6,
                 'mata_kuliah_id' => 2,
+                'dosen_id' => 2,
                 'kelas' => 'A2',
                 'hari' => 'Selasa',
                 'jam_mulai' => '14:45:00',
@@ -37,6 +39,7 @@ class JadwalSeeder extends Seeder
             [
                 'ruangan_id' => 5,
                 'mata_kuliah_id' => 3,
+                'dosen_id' => 3,
                 'kelas' => 'A2',
                 'hari' => 'Kamis',
                 'jam_mulai' => '14:00:00',
@@ -46,6 +49,7 @@ class JadwalSeeder extends Seeder
             [
                 'ruangan_id' => 3,
                 'mata_kuliah_id' => 4,
+                'dosen_id' => 4,
                 'kelas' => 'A2',
                 'hari' => 'Rabu',
                 'jam_mulai' => '13:30:00',
@@ -55,6 +59,7 @@ class JadwalSeeder extends Seeder
             [
                 'ruangan_id' => 1,
                 'mata_kuliah_id' => 5,
+                'dosen_id' => 5,
                 'kelas' => 'A2',
                 'hari' => 'Sabtu',
                 'jam_mulai' => '10:00:00',
@@ -64,6 +69,7 @@ class JadwalSeeder extends Seeder
             [
                 'ruangan_id' => 1,
                 'mata_kuliah_id' => 6,
+                'dosen_id' => 6,
                 'kelas' => 'A2',
                 'hari' => 'Jumat',
                 'jam_mulai' => '14:30:00',
@@ -73,6 +79,7 @@ class JadwalSeeder extends Seeder
             [
                 'ruangan_id' => 5,
                 'mata_kuliah_id' => 7,
+                'dosen_id' => 7,
                 'kelas' => 'A2',
                 'hari' => 'Selasa',
                 'jam_mulai' => '11:00:00',
@@ -82,6 +89,7 @@ class JadwalSeeder extends Seeder
             [
                 'ruangan_id' => 6,
                 'mata_kuliah_id' => 8,
+                'dosen_id' => 8,
                 'kelas' => 'A2',
                 'hari' => 'Senin',
                 'jam_mulai' => '09:30:00',
@@ -91,6 +99,7 @@ class JadwalSeeder extends Seeder
             [
                 'ruangan_id' => 6,
                 'mata_kuliah_id' => 9,
+                'dosen_id' => 9,
                 'kelas' => 'A2',
                 'hari' => 'Senin',
                 'jam_mulai' => '13:15:00',
@@ -100,6 +109,7 @@ class JadwalSeeder extends Seeder
             [
                 'ruangan_id' => 7,
                 'mata_kuliah_id' => 10,
+                'dosen_id' => null,
                 'kelas' => 'A2',
                 'hari' => 'Sabtu',
                 'jam_mulai' => '08:00:00',

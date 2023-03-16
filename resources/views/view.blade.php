@@ -39,129 +39,123 @@
 
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/v/ju/jq-3.6.0/dt-1.13.1/r-2.4.0/datatables.min.css" />
+
+    <style>
+        table.dataTable.no-footer {
+            border-bottom: 0 !important;
+        }
+
+        .table> :not(caption)>*>* {
+            border: 0 !important;
+        }
+    </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
 
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
 
-        <!-- Navbar -->
-        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
-            data-scroll="true">
-            <div class="container-fluid py-1 px-3">
-                <nav aria-label="breadcrumb" class="d-flex align-items-center">
-                    <h5 class="font-weight-bolder mb-0">
-                        {{ $title }} {{ $sesi }}
-                    </h5>
-                </nav>
-                <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-                    <ul class="navbar-nav ms-auto justify-content-end">
-                        <li class="nav-item px-3 d-flex align-items-center">
-                            <div class="d-flex flex-column align-items-end">
-                                <span id="current_date" class="text-md"></span>
-                                <span id="clock" class="text-md fw-bold"></span>
-                            </div>
-                        </li>
-                        <li class="nav-item ps-3 d-xl-none d-flex align-items-center">
-                            <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                                <div class="sidenav-toggler-inner">
-                                    <i class="sidenav-toggler-line"></i>
-                                    <i class="sidenav-toggler-line"></i>
-                                    <i class="sidenav-toggler-line"></i>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <!-- End Navbar -->
-
         <div class="container-fluid py-4">
             <div class="text-center mb-2">
                 <img src="{{ asset('img/Logo Unsera.png') }}" alt="logo unsera" height="125" />
             </div>
-            <div class="row mb-5">
+            <div class="row mb-4">
                 <h3 class="font-weight-bolder mb-0 text-center">
                     JADWAL PENGGUNAAN RUANGAN
                 </h3>
+                <h5 class="text-center font-weight-normal">
+                    @if (date('l') == 'Sunday')
+                    == Minggu, {{ date('d-m-Y') }} ==
+                    @elseif (date('l') == 'Monday')
+                    == Senin, {{ date('d-m-Y') }} ==
+                    @elseif (date('l') == 'Tuesday')
+                    == Selasa, {{ date('d-m-Y') }} ==
+                    @elseif (date('l') == 'Wednesday')
+                    == Rabu, {{ date('d-m-Y') }} ==
+                    @elseif (date('l') == 'Thursday')
+                    == Kamis, {{ date('d-m-Y') }} ==
+                    @elseif (date('l') == 'Friday')
+                    == Jumat, {{ date('d-m-Y') }} ==
+                    @elseif (date('l') == 'Saturday')
+                    == Sabtu, {{ date('d-m-Y') }} ==
+                    @endif
+                </h5>
             </div>
             <div class="row">
                 <div class="col-lg-8 mb-3">
                     <div class="card">
                         <div class="card-header p-3">
                             <div class="row">
-                                <div class="col-12 d-flex align-items-center justify-content-between">
-                                    <h5 class="mb-0">Jadwal Perkuliahan</h6>
+                                <div class="col-12">
+                                    <h5 class="mb-0">Jadwal Perkuliahan</h5>
+                                    <h6 class="font-weight-normal mb-0">
+                                        {{ $sesi }}
+                                    </h6>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body p-3 border-top">
-                            <table class="table table-responsive w-100 align-items-center mb-0">
-                                <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
-                                            Nama Mata Kuliah</th>
-                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
-                                            Dosen</th>
-                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
-                                            Kelas</th>
-                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
-                                            Waktu</th>
-                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
-                                            Ruang</th>
-                                        <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
-                                            Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($verifikasi_jadwal as $row)
-                                    <tr>
-                                        <td class="align-middle">
-                                            <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->jadwal->mataKuliah->nama_mk }}
-                                            </p>
-                                        </td>
-                                        <td class="align-middle">
-                                            <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->jadwal->mataKuliah->dosen->nama_dosen }}
-                                            </p>
-                                        </td>
-                                        <td class="align-middle">
-                                            <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->jadwal->kelas }}
-                                            </p>
-                                        </td>
-                                        <td class="align-middle">
-                                            <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->jadwal->jam_mulai }}
-                                                -
-                                                {{ $row->jadwal->jam_selesai }}
-                                            </p>
-                                        </td>
-                                        <td class="align-middle">
-                                            <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->jadwal->ruangan->no_ruangan }}
-                                            </p>
-                                        </td>
-                                        <td
-                                            class="align-middle {{ ($row->status == 'Hadir') ? 'bg-success text-white' : (($row->status == 'Tidak Hadir') ? 'bg-danger text-white' : (($row->status == 'Menunggu') ? 'bg-warning text-white' : '')) }}">
-                                            <p class="text-sm font-weight-bold mb-0">
-                                                {{ $row->status }}
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="6" class="text-center">
-                                            <p class="text-sm font-weight-bold mb-0">
-                                                Tidak ada data
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
+                        <div class="card-body p-3 overflow-auto border-top w-100">
+                            <div class="row">
+                                <div class="col-12 overflow-auto">
+                                    <table id="tabel-jadwal" class="table table-responsive align-items-center mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
+                                                    Ruang</th>
+                                                <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
+                                                    Waktu</th>
+                                                <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
+                                                    Kelas</th>
+                                                <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
+                                                    Nama Mata Kuliah</th>
+                                                <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
+                                                    Dosen</th>
+                                                <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">
+                                                    Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($verifikasi_jadwal as $row)
+                                            <tr class="border-0">
+                                                <td class="align-middle">
+                                                    <p class="text-sm font-weight-bold mb-0">
+                                                        {{ $row->jadwal->ruangan->no_ruangan }}
+                                                    </p>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <p class="text-sm font-weight-bold mb-0">
+                                                        {{ $row->jadwal->jam_mulai }}
+                                                        -
+                                                        {{ $row->jadwal->jam_selesai }}
+                                                    </p>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <p class="text-sm font-weight-bold mb-0">
+                                                        {{ $row->jadwal->kelas }}
+                                                    </p>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <p class="text-sm font-weight-bold mb-0">
+                                                        {{ $row->jadwal->mataKuliah->nama_mk }}
+                                                    </p>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <p class="text-sm font-weight-bold mb-0">
+                                                        {{ $row->jadwal->dosen->nama_dosen }}
+                                                    </p>
+                                                </td>
+                                                <td
+                                                    class="align-middle {{ ($row->status == 'Hadir') ? 'bg-success text-white' : (($row->status == 'Tidak Hadir') ? 'bg-danger text-white' : (($row->status == 'Menunggu') ? 'bg-warning text-white' : '')) }}">
+                                                    <p class="text-sm font-weight-bold mb-0">
+                                                        {{ $row->status }}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -176,7 +170,7 @@
                             </div>
                         </div>
                         <div class="card-body p-3 border-top overflow-auto">
-                            <table class="table table-responsive w-100 mb-0">
+                            <table id="tabel-ruangan-tambahan" class="table table-responsive w-100 mb-0">
                                 <thead>
                                     <tr>
                                         <th class="text-dark text-uppercase text-dark text-xs font-weight-bolder ps-2">
@@ -188,7 +182,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($penggunaan as $row)
+                                    @foreach ($penggunaan as $row)
                                     <tr>
                                         <td class="align-middle">
                                             <p class="text-sm font-weight-bold mb-0">
@@ -206,15 +200,7 @@
                                             </p>
                                         </td>
                                     </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="3" class="text-center">
-                                            <p class="text-sm font-weight-bold mb-0">
-                                                Tidak ada data
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    @endforelse
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -228,7 +214,7 @@
                 <div class="row justify-content-center">
                     <div class="col-12 mb-lg-0 mb-4">
                         <div class="copyright text-center text-sm text-muted w-100">
-                            © Sistem Informasi Jadwal Penggunaan Ruangan 2022
+                            © Sistem Informasi Jadwal Penggunaan Ruangan 2023
                         </div>
                     </div>
                 </div>
@@ -254,9 +240,22 @@
         }
 
         $(document).ready(function() {
-            $('.datatable').DataTable({
-                responsive: true,
-                order: [],
+            $('#tabel-jadwal').DataTable({
+                bFilter: false,
+                bInfo: false,
+                paging: false,
+                order: [
+                    [1, 'asc']
+                ]
+            });
+
+            $('#tabel-ruangan-tambahan').DataTable({
+                bFilter: false,
+                bInfo: false,
+                paging: false,
+                order: [
+                    [1, 'asc']
+                ]
             });
         });
     </script>

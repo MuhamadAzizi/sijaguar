@@ -90,7 +90,7 @@
                     </div>
                     <div class="card-body">
                         <div>
-                            <table class="table datatable table-responsive w-100 mb-0">
+                            <table id="tabel-penggunaan" class="table table-responsive w-100 mb-0">
                                 <thead>
                                     <tr>
                                         <th
@@ -181,4 +181,14 @@
         @endif
     </div>
 </div>
+@endsection
+
+@section('datatable-script')
+<script>
+    $(document).ready(function() {
+        $('#tabel-penggunaan').DataTable({
+            responsive: true
+        });
+    });
+</script>
 @endsection

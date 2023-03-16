@@ -49,7 +49,7 @@
                             <div
                                 class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row">
                                 <div class="table-responsive p-0 w-100">
-                                    <table class="table align-items-center mb-0">
+                                    <table id="tabel-verifikasi-jadwal" class="table align-items-center mb-0">
                                         <thead>
                                             <tr>
                                                 <th
@@ -102,7 +102,7 @@
                                                 </td>
                                                 <td class="align-middle">
                                                     <p class="text-xs font-weight-bold mb-0">
-                                                        {{ $row->jadwal->mataKuliah->dosen->nama_dosen }}
+                                                        {{ $row->jadwal->dosen->nama_dosen }}
                                                     </p>
                                                 </td>
                                                 <td class="align-middle">
@@ -186,4 +186,17 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('datatable-script')
+<script>
+    $(document).ready(function() {
+        $('#tabel-verifikasi-jadwal').DataTable({
+            responsive: true,
+            order: [
+                [7, 'asc']
+            ]
+        });
+    });
+</script>
 @endsection

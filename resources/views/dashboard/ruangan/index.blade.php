@@ -69,7 +69,7 @@
 
                 <div class="card-body">
                     <div>
-                        <table class="table w-100 datatable mb-0">
+                        <table id="tabel-ruangan" class="table w-100 datatable mb-0">
                             <thead>
                                 <tr>
                                     <th
@@ -128,7 +128,7 @@
                 </div>
                 <div class="card-body">
                     <div>
-                        <table class="table datatable table-responsive w-100 mb-0">
+                        <table id="tabel-jenis-ruangan" class="table table-responsive w-100 mb-0">
                             <thead>
                                 <tr>
                                     <th
@@ -184,7 +184,7 @@
                 </div>
                 <div class="card-body">
                     <div>
-                        <table class="table w-100 datatable mb-0">
+                        <table id="tabel-jenis-ruangan" class="table w-100 table-responsive mb-0">
                             <thead>
                                 <tr>
                                     <th
@@ -254,4 +254,18 @@
     </div>
     @endif
 </div>
+@endsection
+
+@section('datatable-script')
+<script>
+    $(document).ready(function() {
+        $('#tabel-ruangan').DataTable({
+            responsive: true
+        });
+
+        $('#tabel-jenis-ruangan').DataTable({
+            responsive: true
+        });
+    });
+</script>
 @endsection

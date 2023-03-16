@@ -223,7 +223,7 @@
                 <div class="row justify-content-center">
                     <div class="col-12 mb-lg-0 mb-4">
                         <div class="copyright text-center text-sm text-muted text-lg-start">
-                            © Sistem Informasi Jadwal Penggunaan Ruangan 2022
+                            © Sistem Informasi Jadwal Penggunaan Ruangan 2023
                         </div>
                     </div>
                 </div>
@@ -249,14 +249,10 @@
             }
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
-
-        $(document).ready(function() {
-            $('.datatable').DataTable({
-                responsive: true
-            });
-        });
     </script>
     <!--Modal JS Script -->
+
+    @yield('datatable-script')
 
     <script>
         var current_date = document.getElementById('current_date')

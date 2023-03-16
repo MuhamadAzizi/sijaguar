@@ -9,6 +9,7 @@ use App\Models\JadwalUser;
 use App\Models\TahunAkademik;
 use App\Models\Ruangan;
 use App\Models\MataKuliah;
+use App\Models\Dosen;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 
@@ -50,6 +51,7 @@ class JadwalController extends Controller
             'tahun_akademik' => $tahun_akademik,
             'ruangan' => Ruangan::all(),
             'mata_kuliah' => MataKuliah::all(),
+            'dosen' => Dosen::all(),
             'jadwal' => Jadwal::whereBelongsTo($tahun_akademik)->get(),
         ];
 
@@ -108,7 +110,8 @@ class JadwalController extends Controller
             'jadwal' => Jadwal::find($id),
             'tahun_akademik' => TahunAkademik::where('status', 'Aktif')->latest()->first(),
             'ruangan' => Ruangan::all(),
-            'mata_kuliah' => MataKuliah::all()
+            'mata_kuliah' => MataKuliah::all(),
+            'dosen' => Dosen::all()
         ];
 
         return view('dashboard.jadwal.edit', $data);

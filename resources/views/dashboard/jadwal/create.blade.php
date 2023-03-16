@@ -53,6 +53,15 @@
                             </select>
                         </div>
                         <div
+                            class="input-group input-group-static mb-3 @error('dosen_id') is-invalid is-filled @enderror {{ old('dosen_id') ? 'is-valid is-filled' : '' }}">
+                            <label for="exampleFormControlSelect1" class="ms-0">Dosen</label>
+                            <select class="form-control" id="exampleFormControlSelect1" name="dosen_id">
+                                @foreach ($dosen as $row)
+                                <option value="{{ $row->id }}">{{ $row->nama_dosen }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div
                             class="input-group input-group-static my-3 @error('kelas') is-invalid is-filled @enderror {{ old('kelas') ? 'is-valid is-filled' : '' }}">
                             <label class="form-label">Kelas</label>
                             <input type="text" class="form-control" name="kelas" value="{{ old('kelas') }}">

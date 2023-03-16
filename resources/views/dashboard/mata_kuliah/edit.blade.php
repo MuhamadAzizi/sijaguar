@@ -34,15 +34,6 @@
                             <label class="form-label">Mata Kuliah</label>
                             <input type="text" class="form-control" name="nama_mk" value="{{ $mata_kuliah->nama_mk }}">
                         </div>
-                        <div class="input-group input-group-static mb-3 @error('dosen') is-invalid @enderror is-filled">
-                            <label for="exampleFormControlSelect2" class="ms-0">Dosen</label>
-                            <select class="form-control" id="exampleFormControlSelect2" name="dosen_id">
-                                @foreach ($dosen as $row)
-                                <option value="{{ $row->id }}" {{ ($row->id == $mata_kuliah->dosen_id) ? 'selected' : ''
-                                    }} >{{ $row->nama_dosen }}</option>
-                                @endforeach
-                            </select>
-                        </div>
                         <div class="input-group input-group-outline my-3 @error('sks') is-invalid @enderror is-filled">
                             <label class="form-label">SKS</label>
                             <input type="number" class="form-control" name="sks" value="{{ $mata_kuliah->sks }}">

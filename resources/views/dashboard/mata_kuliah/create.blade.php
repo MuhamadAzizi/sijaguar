@@ -34,15 +34,6 @@
                             <input type="text" class="form-control" name="nama_mk" value="{{ old('nama_mk') }}">
                         </div>
                         <div
-                            class="input-group input-group-static mb-3 @error('dosen_id') is-invalid is-filled @enderror {{ old('dosen_id') ? 'is-valid is-filled' : '' }}">
-                            <label for="exampleFormControlSelect1" class="ms-0">Dosen</label>
-                            <select class="form-control" id="exampleFormControlSelect1" name="dosen_id">
-                                @foreach ($dosen as $row)
-                                <option value="{{ $row->id }}">{{ $row->nama_dosen }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div
                             class="input-group input-group-outline mb-3 @error('sks') is-invalid is-filled @enderror {{ old('sks') ? 'is-valid is-filled' : '' }}">
                             <label class="form-label">SKS</label>
                             <input type="number" class="form-control" name="sks" value="{{ old('sks') }}">

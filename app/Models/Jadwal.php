@@ -13,6 +13,7 @@ class Jadwal extends Model
     protected $fillable = [
         'ruangan_id',
         'mata_kuliah_id',
+        'dosen_id',
         'kelas',
         'hari',
         'jam_mulai',
@@ -28,6 +29,11 @@ class Jadwal extends Model
     public function mataKuliah()
     {
         return $this->belongsTo(MataKuliah::class);
+    }
+
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class)->withDefault();
     }
 
     public function verifikasiJadwal()

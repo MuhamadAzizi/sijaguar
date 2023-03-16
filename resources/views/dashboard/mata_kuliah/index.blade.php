@@ -29,16 +29,12 @@
                 </div>
                 <div class="card-body">
                     <div>
-                        <table
-                            class="table {{ (count($mata_kuliah) != 0) ? 'datatable' : ''  }} table-responsive w-100 mb-0">
+                        <table id="tabel-mata-kuliah" class="table table-responsive w-100 mb-0">
                             <thead>
                                 <tr>
                                     <th
                                         class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-4">
                                         Kode MK</th>
-                                    <th
-                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
-                                        Nama Mata Kuliah</th>
                                     <th
                                         class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         Dosen</th>
@@ -57,7 +53,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($mata_kuliah as $row)
+                                @foreach ($mata_kuliah as $row)
                                 <tr>
                                     <td class="align-middle">
                                         <h6 class="mb-0 text-sm ps-3">
@@ -67,11 +63,6 @@
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
                                             {{ $row->nama_mk }}
-                                        </p>
-                                    </td>
-                                    <td class="align-middle">
-                                        <p class="text-xs font-weight-bold mb-0">
-                                            {{ $row->dosen->nama_dosen }}
                                         </p>
                                     </td>
                                     <td class="align-middle">
@@ -102,15 +93,7 @@
 
                                     </td>
                                 </tr>
-                                @empty
-                                <tr>
-                                    <td colspan=" 7" class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">
-                                            Tidak ada data
-                                        </p>
-                                    </td>
-                                </tr>
-                                @endforelse
+                                @endforeach
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-md-start justify-content-center">
@@ -123,4 +106,14 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('datatable-script')
+<script>
+    $(document).ready(function() {
+        $('#tabel-mata-kuliah').DataTable({
+            responsive: true
+        });
+    });
+</script>
 @endsection
