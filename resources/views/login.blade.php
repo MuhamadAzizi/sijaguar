@@ -49,7 +49,7 @@
                 <nav
                     class="navbar navbar-expand-lg blur border-radius-xl top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
                     <div class="container-fluid text-center">
-                        <span class="navbar-brand font-weight-bolder w-100">
+                        <span class="navbar-brand font-weight-bolder w-100 text-wrap">
                             Sistem Informasi Jadwal Penggunaan Ruangan (SIJAGUAR)
                         </span>
                     </div>
@@ -128,7 +128,7 @@
                     <div class="row align-items-center justify-content-center">
                         <div class="col-12 col-md-6 my-auto">
                             <div class="copyright text-center text-sm text-white">
-                                © Sistem Informasi Jadwal Penggunaan Ruangan 2022
+                                © Sistem Informasi Jadwal Penggunaan Ruangan 2023
                             </div>
                         </div>
                     </div>

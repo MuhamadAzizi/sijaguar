@@ -39,21 +39,21 @@ class ViewModeController extends Controller
             $data['verifikasi_jadwal'] = VerifikasiJadwal::whereHas('jadwal', function ($query) use ($sesi_pertama) {
                 $query->where('jadwal.jam_mulai', '>=', $sesi_pertama['jam_masuk'])
                     ->where('jadwal.jam_mulai', '<=', $sesi_pertama['jam_keluar']);
-                    // ->orderBy('jadwal.jam_mulai', 'asc');
+                // ->orderBy('jadwal.jam_mulai', 'asc');
             })->where('verifikasi_jadwal.created_at', 'like', date('Y-m-d') . '%')->get();
         } elseif ($sekarang >= $sesi_kedua['jam_masuk'] && $sekarang <= $sesi_kedua['jam_keluar']) {
             $data['sesi'] = 'Sesi 2' . ' (' . $sesi_kedua['jam_masuk'] . ' - ' . $sesi_kedua['jam_keluar'] . ')';
             $data['verifikasi_jadwal'] = VerifikasiJadwal::whereHas('jadwal', function ($query) use ($sesi_kedua) {
                 $query->where('jadwal.jam_mulai', '>=', $sesi_kedua['jam_masuk'])
                     ->where('jadwal.jam_mulai', '<=', $sesi_kedua['jam_keluar']);
-                    // ->orderBy('jadwal.jam_mulai', 'asc');
+                // ->orderBy('jadwal.jam_mulai', 'asc');
             })->where('verifikasi_jadwal.created_at', 'like', date('Y-m-d') . '%')->get();
         } elseif ($sekarang >= $sesi_ketiga['jam_masuk'] && $sekarang <= $sesi_ketiga['jam_keluar']) {
             $data['sesi'] = 'Sesi 3' . ' (' . $sesi_ketiga['jam_masuk'] . ' - ' . $sesi_ketiga['jam_keluar'] . ')';
             $data['verifikasi_jadwal'] = VerifikasiJadwal::whereHas('jadwal', function ($query) use ($sesi_ketiga) {
                 $query->where('jadwal.jam_mulai', '>=', $sesi_ketiga['jam_masuk'])
                     ->where('jadwal.jam_mulai', '<=', $sesi_ketiga['jam_keluar']);
-                    // ->orderBy('jadwal.jam_mulai', 'asc');
+                // ->orderBy('jadwal.jam_mulai', 'asc');
             })->where('verifikasi_jadwal.created_at', 'like', date('Y-m-d') . '%')->get();
         } else {
             $data['sesi'] = '';
