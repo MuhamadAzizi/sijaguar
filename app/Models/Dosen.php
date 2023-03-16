@@ -17,9 +17,8 @@ class Dosen extends Model
         'email'
     ];
 
-    // One to one dosen ke mata kuliah
-    public function mataKuliah()
+    public function jadwal()
     {
-        return $this->hasOne(MataKuliah::class);
+        return $this->hasOne(Jadwal::class);
     }
 }

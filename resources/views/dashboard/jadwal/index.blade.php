@@ -120,6 +120,9 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php 
+                                // print_r($jadwal->dosen);    
+                                ?>
                                 @foreach ($jadwal as $row)
                                 <tr>
                                     <td class="align-middle">
@@ -134,7 +137,7 @@
                                     </td>
                                     <td class="align-middle">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            {{ $row->mataKuliah->dosen->nama_dosen }}
+                                            {{ $row->dosen->nama_dosen }}
                                         </p>
                                     </td>
                                     <td class="align-middle">

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('ruangan_id')->constrained('ruangan')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('mata_kuliah_id')->constrained('mata_kuliah')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('dosen_id')->nullable()->constrained('dosen')->onUpdate('cascade')->onDelete('cascade');
             $table->char('kelas', 2);
             $table->enum('hari', ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']);
             $table->time('jam_mulai');
@@ -36,6 +37,7 @@ return new class extends Migration
         Schema::table('jadwal', function (Blueprint $table) {
             $table->dropForeign(['ruangan_id']);
             $table->dropForeign(['mata_kuliah_id']);
+            $table->dropForeign(['dosen_id']);
             $table->dropForeign(['tahun_akademik_id']);
         });
         Schema::dropIfExists('jadwal');

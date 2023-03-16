@@ -102,7 +102,7 @@
                                                 </td>
                                                 <td class="align-middle">
                                                     <p class="text-xs font-weight-bold mb-0">
-                                                        {{ $row->jadwal->mataKuliah->dosen->nama_dosen }}
+                                                        {{ $row->jadwal->dosen->nama_dosen }}
                                                     </p>
                                                 </td>
                                                 <td class="align-middle">
