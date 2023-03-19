@@ -55,6 +55,14 @@
                             <input type="text" class="form-control" name="nama" value="{{ old('nama') }}">
                         </div>
                         <div
+                            class="input-group input-group-static mb-3 @error('level') is-invalid is-filled @enderror {{ old('level') ? 'is-valid is-filled' : '' }}">
+                            <label for="exampleFormControlSelect2" class="ms-0">Level</label>
+                            <select class="form-control" id="exampleFormControlSelect2" name="level">
+                                <option value="User" {{ (old('level')=='User' ) ? 'selected' : '' }}>User</option>
+                                <option value="Admin" {{ (old('level')=='Admin' ) ? 'selected' : '' }}>Admin</option>
+                            </select>
+                        </div>
+                        <div
                             class="input-group input-group-outline my-3 @error('password') is-invalid is-filled @enderror">
                             <label class="form-label">Password</label>
                             <input type="password" class="form-control" name="password">

@@ -39,6 +39,9 @@
                                         class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-4">
                                         Username</th>
                                     <th
+                                        class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-4">
+                                        Level</th>
+                                    <th
                                         class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         Aksi</th>
                                 </tr>
@@ -55,6 +58,11 @@
                                     <td class="align-middle">
                                         <span class="text-xs font-weight-bold mb-0">
                                             {{ $row->username }}
+                                        </span>
+                                    </td>
+                                    <td class="align-middle">
+                                        <span class="text-xs font-weight-bold mb-0">
+                                            {{ $row->level }}
                                         </span>
                                     </td>
                                     <td class="align-middle">
@@ -88,7 +96,10 @@
 <script>
     $(document).ready(function() {
         $('#tabel-users').DataTable({
-            responsive: true
+            responsive: true,
+            order: [
+                [2, 'asc']
+            ]
         });
     });
 </script>
