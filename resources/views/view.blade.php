@@ -18,7 +18,6 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="refresh" content="30">
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('img/apple-icon.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
     <title>
@@ -117,35 +116,35 @@
                                         <tbody>
                                             @foreach ($verifikasi_jadwal as $row)
                                             <tr class="border-0">
-                                                <td class="align-middle">
+                                                <td class="align-top">
                                                     <p class="text-sm font-weight-bold mb-0">
                                                         {{ $row->jadwal->ruangan->no_ruangan }}
                                                     </p>
                                                 </td>
-                                                <td class="align-middle">
+                                                <td class="align-top">
                                                     <p class="text-sm font-weight-bold mb-0">
                                                         {{ $row->jadwal->jam_mulai }}
                                                         -
                                                         {{ $row->jadwal->jam_selesai }}
                                                     </p>
                                                 </td>
-                                                <td class="align-middle">
+                                                <td class="align-top">
                                                     <p class="text-sm font-weight-bold mb-0">
                                                         {{ $row->jadwal->kelas }}
                                                     </p>
                                                 </td>
-                                                <td class="align-middle">
+                                                <td class="align-top">
                                                     <p class="text-sm font-weight-bold mb-0">
                                                         {{ $row->jadwal->mataKuliah->nama_mk }}
                                                     </p>
                                                 </td>
-                                                <td class="align-middle">
+                                                <td class="align-top">
                                                     <p class="text-sm font-weight-bold mb-0">
                                                         {{ $row->jadwal->dosen->nama_dosen }}
                                                     </p>
                                                 </td>
                                                 <td
-                                                    class="align-middle {{ ($row->status == 'Hadir') ? 'bg-success text-white' : (($row->status == 'Tidak Hadir') ? 'bg-danger text-white' : (($row->status == 'Menunggu') ? 'bg-warning text-white' : '')) }}">
+                                                    class="align-top {{ ($row->status == 'Hadir') ? 'bg-success text-white' : (($row->status == 'Tidak Hadir') ? 'bg-danger text-white' : (($row->status == 'Menunggu') ? 'bg-warning text-white' : '')) }}">
                                                     <p class="text-sm font-weight-bold mb-0">
                                                         {{ $row->status }}
                                                     </p>
@@ -169,7 +168,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body p-3 border-top overflow-auto">
+                        <div class="card-body p-3 border-top">
                             <table id="tabel-ruangan-tambahan" class="table table-responsive w-100 mb-0">
                                 <thead>
                                     <tr>
@@ -184,18 +183,18 @@
                                 <tbody>
                                     @foreach ($penggunaan as $row)
                                     <tr>
-                                        <td class="align-middle">
+                                        <td class="align-top">
                                             <p class="text-sm font-weight-bold mb-0">
                                                 {{ $row->ruangan->no_ruangan }}
                                             </p>
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="align-top">
                                             <p class="text-sm font-weight-bold mb-0">
                                                 {{ $row->jam_masuk }} - {{ $row->jam_keluar }}
                                             </p>
                                         </td>
-                                        <td class="align-middle">
-                                            <p class="text-sm font-weight-bold mb-0">
+                                        <td class="align-top">
+                                            <p class="text-sm font-weight-bold mb-0 text-wrap">
                                                 {{ $row->keterangan }}
                                             </p>
                                         </td>

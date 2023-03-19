@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         $data = [
             'title' => 'User',
-            'user' => User::where('level', 'User')->get()
+            'user' => User::where('id', '!=', Auth()->user()->id)->get()
         ];
 
         return view('dashboard.user.index', $data);
@@ -65,7 +65,7 @@ class UserController extends Controller
             'username' => $request->username,
             'password' => bcrypt($request->password),
             'nama' => $request->nama,
-            'level' => 'User',
+            'level' => $request->level,
             'foto' => $filename
         ]);
 
