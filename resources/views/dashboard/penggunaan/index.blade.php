@@ -153,12 +153,10 @@
                             </tbody>
                         </table>
 
-                        @if (Auth::user()->level == 'User')
                         <div class="d-flex justify-content-md-start justify-content-center">
                             <a href="{{ route('penggunaan.create') }}" class="m-0 btn bg-gradient-info">
                                 Ajukan Pengajuan penggunaan Ruangan</a>
                         </div>
-                        @endif
                     </div>
                 </div>
             </div>

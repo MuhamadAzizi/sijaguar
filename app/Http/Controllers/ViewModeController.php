@@ -58,12 +58,11 @@ class ViewModeController extends Controller
         } else {
             $data['sesi'] = '';
             $data['verifikasi_jadwal'] = [];
-            $data['penggunaan'] = [];
         }
 
         // Update penggunaan ruangan (naive approach)
-        Penggunaan::where('tanggal_penggunaan', date('Y-m-d'))
-            ->where('jam_keluar', '<', date('H:i:s'))
+        Penggunaan::where('tanggal_penggunaan', '<=', date('Y-m-d'))
+            ->where('jam_keluar', '<=', date('H:i:s'))
             ->where('status', 'Diterima')
             ->update(['status' => 'Selesai']);
 
