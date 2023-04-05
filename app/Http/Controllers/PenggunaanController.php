@@ -22,8 +22,8 @@ class PenggunaanController extends Controller
         ];
 
         // Update penggunaan ruangan (naive approach)
-        Penggunaan::where('tanggal_penggunaan', date('Y-m-d'))
-            ->where('jam_keluar', '<', date('H:i:s'))
+        Penggunaan::where('tanggal_penggunaan', '<=', date('Y-m-d'))
+            ->where('jam_keluar', '<=', date('H:i:s'))
             ->where('status', 'Diterima')
             ->update(['status' => 'Selesai']);
 
@@ -44,16 +44,12 @@ class PenggunaanController extends Controller
      */
     public function create()
     {
-        if (Gate::allows('isUser')) {
-            $data = [
-                'title' => 'Tambah Penggunaan',
-                'ruangan' => Ruangan::all()
-            ];
+        $data = [
+            'title' => 'Tambah Penggunaan',
+            'ruangan' => Ruangan::all()
+        ];
 
-            return view('dashboard.penggunaan.create', $data);
-        } else {
-            abort(403);
-        }
+        return view('dashboard.penggunaan.create', $data);
     }
 
     /**
@@ -64,36 +60,32 @@ class PenggunaanController extends Controller
      */
     public function store(Request $request)
     {
-        if (Gate::allows('isUser')) {
-            $messages = [
-                'ruangan_id.required' => 'Ruangan harus diisi',
-                'tanggal_penggunaan.required' => 'Tanggal Penggunaan harus diisi',
-                'jam_masuk.required' => 'Jam Mulai harus diisi',
-                'jam_keluar.required' => 'Jam Selesai harus diisi',
-                'keterangan.required' => 'Keterangan harus diisi'
-            ];
+        $messages = [
+            'ruangan_id.required' => 'Ruangan harus diisi',
+            'tanggal_penggunaan.required' => 'Tanggal Penggunaan harus diisi',
+            'jam_masuk.required' => 'Jam Mulai harus diisi',
+            'jam_keluar.required' => 'Jam Selesai harus diisi',
+            'keterangan.required' => 'Keterangan harus diisi'
+        ];
 
-            $request->validate([
-                'ruangan_id' => 'required',
-                'tanggal_penggunaan' => 'required',
-                'jam_masuk' => 'required',
-                'jam_keluar' => 'required',
-                'keterangan' => 'required'
-            ], $messages);
+        $request->validate([
+            'ruangan_id' => 'required',
+            'tanggal_penggunaan' => 'required',
+            'jam_masuk' => 'required',
+            'jam_keluar' => 'required',
+            'keterangan' => 'required'
+        ], $messages);
 
-            Penggunaan::create([
-                'user_id' => Auth::user()->id,
-                'ruangan_id' => $request->ruangan_id,
-                'tanggal_penggunaan' => $request->tanggal_penggunaan,
-                'jam_masuk' => $request->jam_masuk,
-                'jam_keluar' => $request->jam_keluar,
-                'keterangan' => $request->keterangan
-            ]);
+        Penggunaan::create([
+            'user_id' => Auth::user()->id,
+            'ruangan_id' => $request->ruangan_id,
+            'tanggal_penggunaan' => $request->tanggal_penggunaan,
+            'jam_masuk' => $request->jam_masuk,
+            'jam_keluar' => $request->jam_keluar,
+            'keterangan' => $request->keterangan
+        ]);
 
-            return redirect()->route('penggunaan.index')->with('success', 'Berhasil mengajukan penggunaan ruangan');
-        } else {
-            abort(403);
-        }
+        return redirect()->route('penggunaan.index')->with('success', 'Berhasil mengajukan penggunaan ruangan');
     }
 
     /**
