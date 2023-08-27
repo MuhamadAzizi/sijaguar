@@ -37,7 +37,7 @@
                                         Kode MK</th>
                                     <th
                                         class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
-                                        Dosen</th>
+                                        Nama Mata Kuliah</th>
                                     <th
                                         class="bg-gradient-info text-white text-uppercase text-secondary text-xxs font-weight-bolder ps-2">
                                         SKS</th>

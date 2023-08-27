@@ -81,7 +81,7 @@
                 </h5>
             </div>
             <div class="row">
-                <div class="col-lg-8 mb-3">
+                <div class="{{ (count($penggunaan) > 0) ? 'col-lg-8' : 'col-lg-12' }} mb-3">
                     <div class="card">
                         <div class="card-header p-3">
                             <div class="row">
@@ -159,6 +159,7 @@
                     </div>
                 </div>
 
+                @if (count($penggunaan) > 0)
                 <div class="col-lg-4 mb-3">
                     <div class="card">
                         <div class="card-header p-3">
@@ -205,6 +206,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
 
