@@ -93,7 +93,7 @@
                     </h6>
                 </li>
 
-                @if (Auth::user()->level == 'Admin')
+                @can('isAdmin')
                 <li class="nav-item">
                     <a class="nav-link text-white {{ Request::is('mata-kuliah*') ? 'active bg-gradient-info' : '' }}"
                         href="{{ route('mata-kuliah.index') }}">
@@ -103,7 +103,7 @@
                         <span class="nav-link-text ms-1">Mata Kuliah</span>
                     </a>
                 </li>
-                @endif
+                @endcan
 
                 <li class="nav-item">
                     <a class="nav-link text-white {{ Request::is('jadwal*') ? 'active bg-gradient-info' : '' }}"
@@ -115,7 +115,7 @@
                     </a>
                 </li>
 
-                @if (Auth::user()->level == 'Admin')
+                @can('isAdmin')
                 <li class="nav-item">
                     <a class="nav-link text-white {{ Request::is('verifikasi-jadwal*') ? 'active bg-gradient-info' : '' }}"
                         href="{{ route('verifikasi-jadwal.index') }}">
@@ -125,14 +125,14 @@
                         <span class="nav-link-text ms-1">Verifikasi Jadwal</span>
                     </a>
                 </li>
-                @endif
+                @endcan
 
                 <li class="nav-item mt-3">
                     <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">User
                     </h6>
                 </li>
 
-                @if (Auth::user()->level == 'Admin')
+                @can('isAdmin')
                 <li class="nav-item">
                     <a class="nav-link text-white {{ Request::is('dosen*') ? 'active bg-gradient-info' : '' }}"
                         href="{{ route('dosen.index') }}">
@@ -152,7 +152,7 @@
                         <span class="nav-link-text ms-1">Daftar User</span>
                     </a>
                 </li>
-                @endif
+                @endcan
 
                 <li class="nav-item">
                     <a class="nav-link text-white {{ Request::is('profil*') ? 'active bg-gradient-info' : '' }}"

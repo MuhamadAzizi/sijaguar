@@ -285,7 +285,7 @@
                                             @endif
                                         </td>
                                         <td class="align-middle">
-                                            @if (Auth::user()->level == 'User')
+                                            @can('isUser')
                                             <a href="{{ route('penggunaan.edit', $row->id) }}"
                                                 class="m-0 btn btn-sm bg-gradient-info">Edit</a>
                                             <form action="{{ route('penggunaan.destroy', $row->id) }}" method="POST"
@@ -295,9 +295,9 @@
                                                 <button type="submit" class="m-0 btn btn-sm bg-gradient-danger"
                                                     onclick="return confirm('Apakah Anda yakin ingin menghapus penggunaan ruangan tersebut?')">Hapus</button>
                                             </form>
-                                            @endif
+                                            @endcan
 
-                                            @if (Auth::user()->level == 'Admin')
+                                            @can('isAdmin')
                                             @if ($row->status == 'Menunggu')
                                             <form action="{{ route('penggunaan.update', $row->id) }}" method="POST"
                                                 class="d-inline">
@@ -319,7 +319,7 @@
                                             @else
                                             -
                                             @endif
-                                            @endif
+                                            @endcan
                                         </td>
                                     </tr>
                                     @empty

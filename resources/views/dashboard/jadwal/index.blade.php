@@ -4,22 +4,10 @@
 <div class="container-fluid py-4">
 
     @if (session('success'))
-    <div class="row">
-        <div class="col-12">
-            <div class="alert alert-success alert-dismissible text-white" role="alert">
-                <span class="text-sm">
-                    {{ session('success') }}
-                </span>
-                <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert"
-                    aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
-    </div>
+    <x-alert type="success" :message="session('success')" />
     @endif
 
-    @if (Auth::user()->level == 'Admin')
+    @can('isAdmin')
     <div class="row">
         <div class="col-12">
             <div class="card my-4">
@@ -70,7 +58,7 @@
             </div>
         </div>
     </div>
-    @endif
+    @endcan
 
     <div class="row">
         <div class="col-12">
@@ -172,10 +160,11 @@
                                         </p>
                                     </td>
                                     <td class="align-middle">
-                                        @if (Auth::user()->level == 'Admin')
+                                        
+                                        @can('isAdmin')
                                         <a href="{{ route('jadwal.edit', $row->id) }}"
                                             class="m-0 btn btn-sm bg-gradient-info">Edit</a>
-                                        @endif
+                                        @endcan
 
                                         <form action="{{ route('jadwal.destroy', $row->id) }}" method="POST"
                                             class="d-inline">

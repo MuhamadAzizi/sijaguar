@@ -8,6 +8,7 @@ use App\Models\Penggunaan;
 use App\Models\Jadwal;
 use App\Models\JadwalUser;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class DashboardController extends Controller
 {
@@ -38,7 +39,7 @@ class DashboardController extends Controller
             'title' => 'Dashboard',
         ];
 
-        if (Auth::user()->level == 'Admin') {
+        if (Gate::allows('isAdmin')) {
             // Count penggunaan semua user
             $data['count_penggunaan_menunggu'] = Penggunaan::where('status', 'Menunggu')->count();
             $data['count_penggunaan_diterima'] = Penggunaan::where('status', 'Diterima')->count();
@@ -55,7 +56,7 @@ class DashboardController extends Controller
             $data['penggunaan'] = Penggunaan::where('penggunaan.status', 'Menunggu')
                 ->orderBy('penggunaan.created_at', 'desc')
                 ->get();
-        } elseif (Auth::user()->level == 'User') {
+        } elseif (Gate::allows('isUsers')) {
             // Count penggunaan berdasarkan user login
             $data['count_penggunaan_menunggu'] = Penggunaan::where('status', 'Menunggu')->where('user_id', Auth::user()->id)->count();
             $data['count_penggunaan_diterima'] = Penggunaan::where('status', 'Diterima')->where('user_id', Auth::user()->id)->count();
